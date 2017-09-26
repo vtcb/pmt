@@ -1,8 +1,9 @@
 #include <cstring>
+#include <fstream>
 #include <iostream>
-#include <vector>
 #include <string>
 #include <sstream>
+#include <vector>
 
 class FlagBase {
 public:
@@ -11,6 +12,7 @@ public:
   virtual bool needsValue()           = 0;
   virtual void setValue(const char *) = 0;
   virtual void setValue()             = 0;
+  virtual bool isSet()                = 0;
 };
 
 template<class T> class Flag : public FlagBase {
@@ -47,6 +49,10 @@ public:
 
   void setValue() {}
 
+  bool isSet() {
+    return this->set;
+  }
+
   T getValue() {
     return this->value;
   }
@@ -62,6 +68,7 @@ template<> void Flag<bool>::setValue() {
 class Flags {
 private:
   std::vector<FlagBase*> flags;
+  std::vector<std::string> args;
 
 public:
   void addFlag(FlagBase* flag) {
@@ -87,9 +94,14 @@ public:
   }
 
   void parse(int argc, char *argv[]) {
-    for (int i = 0; i < argc; i++) {
+    args.clear();
+
+    for (int i = 1; i < argc; i++) {
       const char *arg = argv[i];
-      if (arg[0] != '-') continue;
+      if (arg[0] != '-') {
+        args.push_back(arg);
+        continue;
+      }
       if (arg[1] == '\0') continue;
 
       FlagBase *flag = nullptr;
@@ -118,6 +130,10 @@ public:
       }
     }
   }
+
+  const std::vector<std::string>& getArgs() {
+    return args;
+  }
 } FLAGS;
 
 Flag<int>         FLAG_EDIT     ("edit", 'e', 0);
@@ -134,8 +150,37 @@ void initFlags() {
   FLAGS.addFlag(&FLAG_HELP);
 }
 
+void printHelp() {
+  std::cout << "Help me, Obi-Wan Kenobi. You're my only hope." << std::endl;
+}
+
 int main(int argc, char *argv[]) {
+  std::ios_base::sync_with_stdio(false);
+
   initFlags();
   FLAGS.parse(argc, argv);
+
+  if (FLAG_HELP.getValue()) {
+    printHelp();
+    return 0;
+  }
+
+  std::vector<std::string> pattern_list;
+  std::vector<std::string> textfile_list;
+
+  if (FLAG_PATTERN.isSet()) {
+    std::ifstream pattern_file(FLAG_PATTERN.getValue());
+    std::string line;
+    while (std::getline(pattern_file, line)) {
+      pattern_list.push_back(line);
+    }
+  } else {
+    pattern_list.push_back(FLAGS.getArgs()[0]);
+  }
+
+  for (int i = FLAG_PATTERN.isSet() ? 0 : 1; i < FLAGS.getArgs().size(); i++) {
+    textfile_list.push_back(FLAGS.getArgs()[i]);
+  }
+
   std::cout << FLAG_EDIT.getValue() << std::endl;
 }
