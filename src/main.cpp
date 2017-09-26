@@ -4,11 +4,13 @@
 #include <string>
 #include <sstream>
 #include <vector>
+
 #include "flags.h"
+#include "naive.h"
 
 Flags FLAGS;
 
-Flag<int>         FLAG_EDIT     ("edit", 'e', 0);
+Flag<int>         FLAG_EDIT     ("edit",      'e', 0);
 Flag<std::string> FLAG_PATTERN  ("pattern",   'p', "");
 Flag<std::string> FLAG_ALGORITHM("algorithm", 'a', "");
 Flag<bool>        FLAG_COUNT    ("count",     'c', false);
@@ -54,5 +56,19 @@ int main(int argc, char *argv[]) {
     textfile_list.push_back(FLAGS.getArgs()[i]);
   }
 
-  std::cout << FLAG_EDIT.getValue() << std::endl;
+  SearchAlgorithm *algorithm = new Naive(SearchMode::COUNT);
+  algorithm->search(pattern_list, textfile_list);
+  (new Naive(SearchMode::PRINT))->search(pattern_list, textfile_list);
+  std::cout << algorithm->getCount() << std::endl;
 }
+
+/**
+ * Brute force
+ * KMP
+ * Aho-Corasick
+ * Boyer-Moore
+ * Sellers
+ * Shift-Or
+ * Ukkonen
+ * Wu-Mamber
+ */
