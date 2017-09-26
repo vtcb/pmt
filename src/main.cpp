@@ -4,137 +4,9 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include "flags.h"
 
-class FlagBase {
-public:
-  virtual bool hasName(const char *)  = 0;
-  virtual bool hasShortcut(char)      = 0;
-  virtual bool needsValue()           = 0;
-  virtual void setValue(const char *) = 0;
-  virtual void setValue()             = 0;
-  virtual bool isSet()                = 0;
-};
-
-template<class T> class Flag : public FlagBase {
-private:
-  const char *name;
-  char shortcut;
-  T value;
-  bool set;
-
-public:
-  Flag(const char *name, char shortcut, const T& value)
-      : name(name),
-        shortcut(shortcut),
-        value(value),
-        set(false) {}
-
-  bool hasName(const char *name) {
-    return strcmp(this->name, name) == 0;
-  }
-
-  bool hasShortcut(char shortcut) {
-    return this->shortcut == shortcut;
-  }
-
-  bool needsValue() {
-    return true;
-  }
-
-  void setValue(const char *arg) {
-    std::stringstream ss(arg);
-    ss >> this->value;
-    this->set = true;
-  }
-
-  void setValue() {}
-
-  bool isSet() {
-    return this->set;
-  }
-
-  T getValue() {
-    return this->value;
-  }
-};
-template<> bool Flag<bool>::needsValue() {
-  return false; 
-}
-template<> void Flag<bool>::setValue() {
-  this->value = true;
-  this->set = true;
-}
-
-class Flags {
-private:
-  std::vector<FlagBase*> flags;
-  std::vector<std::string> args;
-
-public:
-  void addFlag(FlagBase* flag) {
-    flags.push_back(flag);
-  }
-
-  FlagBase *findByName(const char *name) {
-    for (FlagBase *flag : flags) {
-      if (flag->hasName(name)) {
-        return flag;
-      }
-    }
-    return nullptr;
-  }
-
-  FlagBase *findByShortcut(char shortcut) {
-    for (FlagBase *flag : flags) {
-      if (flag->hasShortcut(shortcut)) {
-        return flag;
-      }
-    }
-    return nullptr;
-  }
-
-  void parse(int argc, char *argv[]) {
-    args.clear();
-
-    for (int i = 1; i < argc; i++) {
-      const char *arg = argv[i];
-      if (arg[0] != '-') {
-        args.push_back(arg);
-        continue;
-      }
-      if (arg[1] == '\0') continue;
-
-      FlagBase *flag = nullptr;
-      if (arg[1] == '-') {
-        flag = findByName(arg + 2);
-      } else {
-        // TODO(bolado): Handle multiple options.
-        flag = findByShortcut(arg[1]);
-      }
-
-      if (flag == nullptr) {
-        // TODO(bolado): Report invalid option.
-        continue;
-      }
-
-      if (flag->needsValue()) {
-        bool hasValue = true;
-        hasValue = hasValue && i < argc - 1;
-        if (!hasValue) {
-          // TODO(bolado): Report missing value.
-          continue;
-        }
-        flag->setValue(argv[++i]);
-      } else {
-        flag->setValue();
-      }
-    }
-  }
-
-  const std::vector<std::string>& getArgs() {
-    return args;
-  }
-} FLAGS;
+Flags FLAGS;
 
 Flag<int>         FLAG_EDIT     ("edit", 'e', 0);
 Flag<std::string> FLAG_PATTERN  ("pattern",   'p', "");
@@ -156,7 +28,7 @@ void printHelp() {
 
 int main(int argc, char *argv[]) {
   std::ios_base::sync_with_stdio(false);
-
+  
   initFlags();
   FLAGS.parse(argc, argv);
 
