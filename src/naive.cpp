@@ -13,7 +13,6 @@ void Naive::search(
     std::ifstream textfile(filename);
     std::string line;
     while (std::getline(textfile, line)) {
-      std::cerr << "Line: " << line << std::endl; 
       search(pattern_list, line);
     }
   }
