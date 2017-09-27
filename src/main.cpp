@@ -42,8 +42,9 @@ public:
 
   static std::vector<std::string> textfileList() {
     std::vector<std::string> textfile_list;
-    for (int i = FLAG_PATTERN.isSet() ? 0 : 1; i < FLAGS.getArgs().size(); i++) {
-      textfile_list.push_back(FLAGS.getArgs()[i]);
+    std::vector<std::string> args = FLAGS.getArgs();
+    for (int i = FLAG_PATTERN.isSet() ? 0 : 1; i < args.size(); i++) {
+      textfile_list.push_back(args[i]);
     }
     return textfile_list;
   }

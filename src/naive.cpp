@@ -6,6 +6,8 @@
 
 #include "search_algorithm.h"
 
+Naive::Naive(SearchMode mode) : SearchAlgorithm(mode) {}
+
 void Naive::search(
     std::vector<std::string> pattern_list,
     std::vector<std::string> textfile_list) {

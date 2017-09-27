@@ -8,7 +8,7 @@
 
 class Naive : public SearchAlgorithm {
 public:
-  Naive(SearchMode mode) : SearchAlgorithm(mode) {}
+  Naive(SearchMode mode);
   void search(
       std::vector<std::string> pattern_list,
       std::vector<std::string> textfile_list);

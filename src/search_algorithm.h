@@ -22,4 +22,4 @@ public:
       std::vector<std::string> textfile_list) = 0;
 };
 
-#endif /* PMT_ALGORITHM_H */
+#endif /* PMT_SEARCH_ALGORITHM_H */
