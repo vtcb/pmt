@@ -10,7 +10,7 @@ class KMP : public SearchAlgorithm {
 private:
   std::vector<int> table;
 public:
-  KMP(SearchMode mode) : SearchAlgorithm(mode) {}
+  KMP(SearchMode mode);
   void search(
       std::vector<std::string> pattern_list,
       std::vector<std::string> textfile_list);

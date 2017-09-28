@@ -2,6 +2,7 @@
 #define PMT_SEARCH_ALGORITHMS_H
 
 #include "naive.h"
+#include "kmp.h"
 #include "aho_corasick.h"
 
 #endif /* PMT_SEARCH_ALGORITHMS_H */

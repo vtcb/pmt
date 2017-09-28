@@ -1,10 +1,12 @@
-#include "KMP.h"
+#include "kmp.h"
 
 #include <fstream>
 #include <string>
 #include <vector>
 
 #include "search_algorithm.h"
+
+KMP::KMP(SearchMode mode) : SearchAlgorithm(mode) {}
 
 void KMP::search(
     std::vector<std::string> pattern_list,
