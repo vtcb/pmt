@@ -1,6 +1,9 @@
 #include <cstring>
+#include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <locale>
+#include <set>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -54,16 +57,31 @@ public:
   }
 
   static SearchAlgorithm* algorithm(SearchMode search_mode) {
+    static const std::set<std::string> _NAIVE =
+        {"naive", "brute-force", "bruteforce", "bf"};
+    static const std::set<std::string> _KMP =
+        {"kmp", "knuth-morris-pratt", "knuthmorrispratt"};
+    static const std::set<std::string> _AHO =
+        {"aho", "aho-corasick", "ahocorasick", "ac"};
+
+    std::string alias = FLAG_ALGORITHM.getValue();
+    std::transform(alias.begin(), alias.end(),alias.begin(), ::towlower);
+
+    static const auto checkAlgorithm =
+        [&](std::set<std::string> aliases) -> bool {
+      return aliases.count(alias) > 0;
+    };
+
     if (!FLAG_ALGORITHM.isSet()) {
       if (FLAG_EDIT.getValue() == 0) {
         return new Naive(search_mode);
       }
-    } else {
-      if (FLAG_ALGORITHM.getValue() == "brute-force") {
-        return new Naive(search_mode);
-      }
+      return nullptr;
     }
 
+    if (checkAlgorithm(_NAIVE)) return new Naive      (search_mode);
+    if (checkAlgorithm(_KMP))   return new KMP        (search_mode);
+    if (checkAlgorithm(_AHO))   return new AhoCorasick(search_mode);
     return nullptr;
   }
 };
@@ -88,6 +106,23 @@ int main(int argc, char *argv[]) {
   std::vector<std::string> textfile_list = InputParser::textfileList();
   SearchMode               search_mode   = InputParser::searchMode();
   SearchAlgorithm          *algorithm    = InputParser::algorithm(search_mode);
+
+  if (pattern_list.empty()) {
+    std::cerr << "Pattern list can't be empty." << std::endl;
+    // TODO(bolado): Add usage.
+    // TODO(bolado): Even for an empty file?
+    exit(1);
+  }
+  if (textfile_list.empty()) {
+    std::cerr << "Textfile list can't be empty." << std::endl;
+    // TODO(bolado): Add usage.
+    exit(1);
+  }
+  if (algorithm == nullptr) {
+    std::cerr << "Algorithm not recognized" << std::endl;
+    // TODO(bolado): Add help.
+    exit(1);
+  }
 
   switch (search_mode) {
     case SearchMode::COUNT:
