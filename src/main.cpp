@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "flags.h"
-#include "naive.h"
+#include "search_algorithms.h"
 
 Flags FLAGS;
 
@@ -55,12 +55,13 @@ public:
 
   static SearchAlgorithm* algorithm(SearchMode search_mode) {
     if (!FLAG_ALGORITHM.isSet()) {
-      // Choose
-      return new Naive(search_mode);
-    }
-
-    if (FLAG_ALGORITHM.getValue() == "brute-force") {
-      return new Naive(search_mode);
+      if (FLAG_EDIT.getValue() == 0) {
+        return new Naive(search_mode);
+      }
+    } else {
+      if (FLAG_ALGORITHM.getValue() == "brute-force") {
+        return new Naive(search_mode);
+      }
     }
 
     return nullptr;

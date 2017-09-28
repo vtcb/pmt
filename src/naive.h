@@ -16,4 +16,4 @@ public:
   int search(std::string pattern, std::string text);
 };
 
-#endif /* PMT_MATCH_H */
+#endif /* PMT_NAIVE_H */

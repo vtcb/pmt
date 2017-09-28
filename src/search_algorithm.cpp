@@ -2,7 +2,6 @@
 
 #include <string>
 
-
 SearchAlgorithm::SearchAlgorithm(SearchMode mode) : mode(mode), count(0) {}
 
 void SearchAlgorithm::output(const std::string& line, int matches) {
