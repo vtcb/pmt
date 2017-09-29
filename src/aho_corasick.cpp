@@ -2,6 +2,7 @@
 
 #include "search_algorithm.h"
 
+#include <fstream>
 #include <queue>
 
 AhoCorasick::AhoCorasick(SearchMode mode) : SearchAlgorithm(mode) {
@@ -9,8 +10,21 @@ AhoCorasick::AhoCorasick(SearchMode mode) : SearchAlgorithm(mode) {
 }
 
 void AhoCorasick::search(
-  std::vector<std::string> pattern_list,
-  std::vector<std::string> textfile_list) {
+    std::vector<std::string> pattern_list,
+    std::vector<std::string> textfile_list) {
+  for (std::string pattern : pattern_list) {
+    add(pattern);
+  }
+
+  activate();
+
+  for (std::string filename : textfile_list) {
+    std::ifstream textfile(filename);
+    std::string line;
+    while (std::getline(textfile, line)) {
+      output(line, search(line));
+    }
+  }
 }
 
 void AhoCorasick::add(const std::string& str) {
@@ -57,6 +71,8 @@ void AhoCorasick::activate() {
       processNode(v, fail);
     }
   }
+
+  // TODO(bolado): Preprocess edges.
 }
 
 void AhoCorasick::traverse(int u, std::string s) {
@@ -67,4 +83,20 @@ void AhoCorasick::traverse(int u, std::string s) {
     traverse(edge.second, ds);
     // printf("EDGE: %d %c\n", edge.second, edge.first);
   }
+}
+
+int AhoCorasick::search(const std::string& text) {
+  int u = 0;
+  int matches = 0;
+  for (char ch : text) {
+    while (u && !nodes[u].hasNext(ch)) {
+      u = nodes[u].getFail();
+    }
+
+    if (nodes[u].hasNext(ch)) {
+      u = nodes[u][ch];
+    }
+    matches += nodes[u].getPatterns();
+  }
+  return matches;
 }

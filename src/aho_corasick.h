@@ -18,6 +18,7 @@ public:
   void add(const std::string& str);
   void activate();
   void traverse(int u = 0, std::string s = "");
+  int search(const std::string& text);
 };
 
 #endif /* PMT_AHO_H */
