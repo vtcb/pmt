@@ -8,10 +8,11 @@
 #include <sstream>
 #include <vector>
 
-#include "flags.h"
+#include "flag.h"
+#include "flag_parser.h"
 #include "search_algorithms.h"
 
-Flags FLAGS;
+FlagParser FLAGS;
 
 Flag<int>         FLAG_EDIT     ("edit",      'e', 0);
 Flag<std::string> FLAG_PATTERN  ("pattern",   'p', "");

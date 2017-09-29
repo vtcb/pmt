@@ -1,5 +1,5 @@
-#ifndef PMT_FLAGS_H
-#define PMT_FLAGS_H
+#ifndef PMT_FLAG_H
+#define PMT_FLAG_H
 
 #include <string>
 #include <vector>
@@ -32,17 +32,4 @@ public:
   T getValue();
 };
 
-class Flags {
-private:
-  std::vector<FlagBase*> flags;
-  std::vector<std::string> args;
-
-public:
-  void addFlag(FlagBase* flag);
-  FlagBase *findByName(const char *name);
-  FlagBase *findByShortcut(char shortcut);
-  void parse(int argc, char *argv[]);
-  const std::vector<std::string>& getArgs();
-};
-
-#endif /* PMT_FLAGS_H */
+#endif /* PMT_FLAG_H */
