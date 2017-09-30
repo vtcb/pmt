@@ -10,16 +10,19 @@ enum class SearchMode {
 };
 
 class SearchAlgorithm {
-private:
-  SearchMode mode;
-  int count;
 public:
   SearchAlgorithm(SearchMode mode);
-  void output(const std::string& line, int matches);
-  int getCount();
   virtual void search(
       std::vector<std::string> pattern_list,
       std::vector<std::string> textfile_list) = 0;
+  int getCount();
+
+protected:
+  void output(const std::string& line, int matches);
+
+private:
+  SearchMode mode;
+  int count;
 };
 
 #endif /* PMT_SEARCH_ALGORITHM_H */

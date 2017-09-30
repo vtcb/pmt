@@ -7,8 +7,6 @@
 #include "search_algorithms.h"
 
 class InputParser {
-private:
-  FlagParser FLAG_PARSER;
 public:
   void parse(int argc, char *argv[]);
   bool help();
@@ -16,6 +14,9 @@ public:
   std::vector<std::string> textfileList();
   SearchMode searchMode();
   SearchAlgorithm* algorithm(SearchMode search_mode);
+
+private:
+  FlagParser FLAG_PARSER;
 };
 
 #endif /* PMT_INPUT_PARSER_H */

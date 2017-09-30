@@ -16,7 +16,7 @@ const char *OPTIONS =
 "  -h, --help      Display this text\n"
 "  -p, --pattern   Specify file to get patterns from\n"
 "  -a, --algorithm Specify search algorithm to run\n"
-"                  See \"Algorithms\" section for possible value\n"
+"                  See \"Algorithms\" section for possible values\n"
 "  -e, --edit      Specify max error\n"
 "  -c, --count     Output only number of matches\n";
 

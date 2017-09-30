@@ -12,6 +12,8 @@ public:
   void search(
       std::vector<std::string> pattern_list,
       std::vector<std::string> textfile_list);
+
+private:
   void search(std::vector<std::string> pattern_list, std::string text);
   int search(std::string pattern, std::string text);
 };

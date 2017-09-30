@@ -15,12 +15,6 @@ public:
 };
 
 template<class T> class Flag : public FlagBase {
-private:
-  const char *name;
-  char shortcut;
-  T value;
-  bool set;
-
 public:
   Flag(const char *name, char shortcut, const T& value);
   bool hasName(const char *name);
@@ -30,6 +24,12 @@ public:
   void setValue();
   bool isSet();
   T getValue();
+
+private:
+  const char *name;
+  char shortcut;
+  T value;
+  bool set;
 };
 
 #endif /* PMT_FLAG_H */

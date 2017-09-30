@@ -4,11 +4,6 @@
 #include <unordered_map>
 
 class AhoNode {
-private:
-  // TODO(bolado): Consider optimazing it.
-  std::unordered_map<char, int> next;
-  int fail;
-  int patterns;
 public:
   AhoNode();
   bool hasNext(char ch);
@@ -26,6 +21,12 @@ public:
   int& operator [](char ch) {
     return next[ch];
   }
+
+private:
+  // TODO(bolado): Consider optimizing it.
+  std::unordered_map<char, int> next;
+  int fail;
+  int patterns;
 };
 
 #endif /* PMT_AHO_NODE_H */

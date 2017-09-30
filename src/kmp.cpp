@@ -88,5 +88,4 @@ void KMP::kmp_table(std::string pattern){
     candidate++;
   }
   table[position] = candidate;
-
 }
