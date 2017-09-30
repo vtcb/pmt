@@ -2,10 +2,11 @@
 
 #include <algorithm>
 #include <functional>
+#include <ostream>
 
-BitMask::BitMask(int size) : size(size), data(size, 0) {}
+BitMask::BitMask(int size, int value) : size(size), data(size, value) {}
 
-int BitMask::getSize() {
+int BitMask::getSize() const {
   return size;
 }
 

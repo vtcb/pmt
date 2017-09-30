@@ -25,6 +25,7 @@ bool InputParser::help() {
   return FLAG_HELP.getValue();
 }
 
+// TODO(bolado): Handle empty lines
 std::vector<std::string> InputParser::patternList() {
   std::vector<std::string> pattern_list;
   if (FLAG_PATTERN.isSet()) {
@@ -59,6 +60,8 @@ SearchAlgorithm* InputParser::algorithm(SearchMode search_mode) {
       {"kmp", "knuth-morris-pratt", "knuthmorrispratt"};
   static const std::set<std::string> _AHO =
       {"aho", "aho-corasick", "ahocorasick", "ac"};
+  static const std::set<std::string> _BITAP =
+      {"bitap", "shift-or", "shift-and", "shiftor", "shiftand", "so"};
 
   std::string alias = FLAG_ALGORITHM.getValue();
   std::transform(alias.begin(), alias.end(),alias.begin(), ::towlower);
@@ -78,5 +81,6 @@ SearchAlgorithm* InputParser::algorithm(SearchMode search_mode) {
   if (checkAlgorithm(_NAIVE)) return new Naive      (search_mode);
   if (checkAlgorithm(_KMP))   return new KMP        (search_mode);
   if (checkAlgorithm(_AHO))   return new AhoCorasick(search_mode);
+  if (checkAlgorithm(_BITAP)) return new Bitap      (search_mode);
   return nullptr;
 }
