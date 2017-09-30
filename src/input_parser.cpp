@@ -33,7 +33,7 @@ std::vector<std::string> InputParser::patternList() {
     while (std::getline(pattern_file, line)) {
       pattern_list.push_back(line);
     }
-  } else {
+  } else if (!FLAG_PARSER.getArgs().empty()) {
     pattern_list.push_back(FLAG_PARSER.getArgs()[0]);
   }
   return pattern_list;
