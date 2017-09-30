@@ -31,12 +31,28 @@ const char *ALGORITHMS =
 "    Values: kmp, knuth-morris-pratt, knuthmorrispratt\n"
 "  Aho Corasick:\n"
 "    Aho Corasick algorithm\n"
-"    Values: ac, aho, aho-corasick, ahocorasick\n";
+"    Values: ac, aho, aho-corasick, ahocorasick\n"
+"  Bitap:\n"
+"    Bitap algorithm\n"
+"    Values: so, bitap, shift-or, shift-and, shiftor, shiftand\n";
 
+// TODO(bolado): Handle stdout versus stderr.
 class Help {
 public:
   static void help() {
     output(USAGE, DESCRIPTION, OPTIONS, ALGORITHMS);
+  }
+
+  static void usage() {
+    output(USAGE);
+  }
+
+  static void options() {
+    output(OPTIONS);
+  }
+
+  static void algorithms() {
+    output(ALGORITHMS);
   }
 
 private:

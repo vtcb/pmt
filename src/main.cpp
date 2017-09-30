@@ -9,10 +9,6 @@
 #include "input_parser.h"
 #include "search_algorithms.h"
 
-void printHelp() {
-  Help::help();
-}
-
 #include "bitmask.h"
 
 
@@ -35,7 +31,7 @@ int main(int argc, char *argv[]) {
   input_parser.parse(argc, argv);
 
   if (input_parser.help()) {
-    printHelp();
+    Help::help();
     return 0;
   }
 
@@ -45,19 +41,19 @@ int main(int argc, char *argv[]) {
   SearchAlgorithm          *algorithm    = input_parser.algorithm(search_mode);
 
   if (pattern_list.empty()) {
-    std::cerr << "Pattern list can't be empty." << std::endl;
-    // TODO(bolado): Add usage.
+    std::cout << "Pattern list can't be empty." << std::endl;
     // TODO(bolado): Even for an empty file?
+    Help::usage();
     exit(1);
   }
   if (textfile_list.empty()) {
-    std::cerr << "Textfile list can't be empty." << std::endl;
-    // TODO(bolado): Add usage.
+    std::cout << "Textfile list can't be empty." << std::endl;
+    Help::usage();
     exit(1);
   }
   if (algorithm == nullptr) {
-    std::cerr << "Algorithm not recognized" << std::endl;
-    // TODO(bolado): Add help.
+    std::cout << "Algorithm not recognized." << std::endl;
+    Help::algorithms();
     exit(1);
   }
 
