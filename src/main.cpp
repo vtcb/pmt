@@ -5,12 +5,12 @@
 
 #include "flag.h"
 #include "flag_parser.h"
+#include "help.h"
 #include "input_parser.h"
 #include "search_algorithms.h"
 
 void printHelp() {
-  // TODO(bolado): Write help
-  std::cout << "Help me, Obi-Wan Kenobi. You're my only hope." << std::endl;
+  Help::help();
 }
 
 int main(int argc, char *argv[]) {
@@ -58,9 +58,9 @@ int main(int argc, char *argv[]) {
 }
 
 /**
- * Brute force
- * KMP
- * Aho-Corasick
+ * Brute force    OK
+ * KMP            OK
+ * Aho-Corasick   OK
  * Boyer-Moore
  * Sellers
  * Shift-Or
