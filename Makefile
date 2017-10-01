@@ -33,10 +33,10 @@ ticket:
 	$(CC) $(CFLAGS) spikes/ticket.cpp $(INC) $(LIB) -o bin/ticket
 
 run:
-	./$(TARGET) -p test/patt1.txt test/text1.txt
+	./$(TARGET) -p test/patt1.txt test/text1.txt ${args}
 
 all:
 	make clean $(TARGET)
 	@echo "    ALL OK! :)"
 
-.PHONY: clean
+.PHONY: clean, run

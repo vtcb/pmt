@@ -63,6 +63,13 @@ SearchAlgorithm* InputParser::algorithm(SearchMode search_mode) {
   static const std::set<std::string> _BITAP =
       {"bitap", "shift-or", "shift-and", "shiftor", "shiftand", "so"};
 
+  if (!FLAG_ALGORITHM.isSet()) {
+    if (FLAG_EDIT.getValue() == 0) {
+      return new Naive(search_mode);
+    }
+    return nullptr;
+  }
+
   std::string alias = FLAG_ALGORITHM.getValue();
   std::transform(alias.begin(), alias.end(),alias.begin(), ::towlower);
 
@@ -70,13 +77,6 @@ SearchAlgorithm* InputParser::algorithm(SearchMode search_mode) {
       [&](std::set<std::string> aliases) -> bool {
     return aliases.count(alias) > 0;
   };
-
-  if (!FLAG_ALGORITHM.isSet()) {
-    if (FLAG_EDIT.getValue() == 0) {
-      return new Naive(search_mode);
-    }
-    return nullptr;
-  }
 
   if (checkAlgorithm(_NAIVE)) return new Naive      (search_mode);
   if (checkAlgorithm(_KMP))   return new KMP        (search_mode);
