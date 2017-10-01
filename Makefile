@@ -5,7 +5,7 @@ BUILDDIR := build
 TARGET := pmt
 # TODO(bolado): Meet specification.
  
-SRCEXT := cpp
+SRCEXT := cc
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 CFLAGS := -g -Wall -Wextra
