@@ -11,22 +11,9 @@
 
 #include "bitmask.h"
 
-
-std::ostream& operator << (std::ostream& os, const BitMask mask) {
-  os << "BitMask(" << mask.getSize() << ")[";
-
-  for (int i = mask.getSize() - 1; i >= 0; i--) {
-    os << mask[i];
-  }
-
-  os << "]";
-
-  return os;
-}
-
 int main(int argc, char *argv[]) {
   std::ios_base::sync_with_stdio(false);
-  
+
   InputParser input_parser = InputParser();
   input_parser.parse(argc, argv);
 
