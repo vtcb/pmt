@@ -43,7 +43,7 @@ std::vector<std::string> InputParser::patternList() {
 std::vector<std::string> InputParser::textfileList() {
   std::vector<std::string> textfile_list;
   std::vector<std::string> args = FLAG_PARSER.getArgs();
-  for (int i = FLAG_PATTERN.isSet() ? 0 : 1; i < args.size(); i++) {
+  for (unsigned int i = FLAG_PATTERN.isSet() ? 0 : 1; i < args.size(); i++) {
     textfile_list.push_back(args[i]);
   }
   return textfile_list;

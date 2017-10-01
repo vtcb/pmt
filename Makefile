@@ -2,12 +2,13 @@ CC := g++ -std=c++0x
 # CC := clang --analyze # and comment out the linker last line for sanity
 SRCDIR := src
 BUILDDIR := build
-TARGET := app
+TARGET := pmt
+# TODO(bolado): Meet specification.
  
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g # -Wall
+CFLAGS := -g -Wall -Wextra
 LIB := 
 INC :=
 
@@ -32,10 +33,10 @@ ticket:
 	$(CC) $(CFLAGS) spikes/ticket.cpp $(INC) $(LIB) -o bin/ticket
 
 run:
-	./$(TARGET)
+	./$(TARGET) -p test/patt1.txt test/text1.txt
 
 all:
-	make clean app
+	make clean $(TARGET)
 	@echo "    ALL OK! :)"
 
 .PHONY: clean

@@ -30,9 +30,9 @@ void Naive::search(std::vector<std::string> pattern_list, std::string text) {
 
 int Naive::search(std::string pattern, std::string text) {
   int matches = 0;
-  for (int i = 0; i < text.size() - pattern.size() + 1; i++) {
-    int partial = 0;
-    for (int j = 0; j < pattern.size(); j++) {
+  for (unsigned int i = 0; i < text.size() - pattern.size() + 1; i++) {
+    unsigned int partial = 0;
+    for (unsigned int j = 0; j < pattern.size(); j++) {
       if (text[i + j] != pattern[j]) break;
       partial++;
     }

@@ -45,42 +45,41 @@ void KMP::search(std::vector<std::string> pattern_list, std::string text) {
 
 int KMP::search(std::string pattern, std::string text) {
   int matches = 0;
-  int current_match = 0;
-  int current_char = 0;
+  unsigned int current_match = 0;
+  unsigned int current_char = 0;
 
-  while(current_match + current_char < text.size()){
-    if(pattern[current_char] == text[current_match + current_char]){
+  while (current_match + current_char < text.size()) {
+    if (pattern[current_char] == text[current_match + current_char]) {
       current_char++;
-      if(current_char == pattern.size()){
+      if (current_char == pattern.size()) {
         matches++;
       }
-    }else{
-      if(table[current_char] > -1){
+    } else {
+      if (table[current_char] > -1) {
         current_match += current_char - table[current_char];
         current_char = table[current_char];
-      }else{
+      } else {
         current_match += current_char + 1;
         current_char = 0;
       }
     }
-
   }
   
   return matches;
 }
 
-void KMP::kmp_table(std::string pattern){
-  int position = 1;
+void KMP::kmp_table(std::string pattern) {
+  unsigned int position = 1;
   int candidate = 0;
   table[0] = -1;
 
-  while (position < pattern.size()){
-    if (pattern[position] == pattern[candidate]){
+  while (position < pattern.size()) {
+    if (pattern[position] == pattern[candidate]) {
       table[position] = table[candidate];
-    }else{
+    } else {
       table[position] = candidate;
       candidate = table[candidate];
-      while(candidate >= 0 && pattern[position]){
+      while (candidate >= 0 && pattern[position]) {
         candidate = table[candidate];
       }
     }

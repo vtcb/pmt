@@ -34,8 +34,9 @@ int Bitap::search(std::string pattern, std::string text) {
   std::vector<BitMask> pattern_mask(300, BitMask(pattern.size() + 1, 1));
   BitMask mask = ~BitMask::one(pattern.size() + 1);
 
-  for (int i = 0; i < pattern.size(); i++) {
-    pattern_mask[pattern[i]] = pattern_mask[pattern[i]] & ~(BitMask::one(pattern.size() + 1) << i);
+  for (unsigned int i = 0; i < pattern.size(); i++) {
+    pattern_mask[pattern[i]] =
+        pattern_mask[pattern[i]] & ~(BitMask::one(pattern.size() + 1) << i);
   }
 
   for (char ch : text) {
