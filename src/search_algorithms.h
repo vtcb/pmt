@@ -5,5 +5,6 @@
 #include "kmp.h"
 #include "aho_corasick.h"
 #include "bitap.h"
+#include "boyer_moore.h"
 
 #endif /* PMT_SEARCH_ALGORITHMS_H */

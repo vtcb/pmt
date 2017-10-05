@@ -62,6 +62,8 @@ SearchAlgorithm* InputParser::algorithm(SearchMode search_mode) {
       {"aho", "aho-corasick", "ahocorasick", "ac"};
   static const std::set<std::string> _BITAP =
       {"bitap", "shift-or", "shift-and", "shiftor", "shiftand", "so"};
+  static const std::set<std::string> _BOYER =
+      {"boyer", "moore", "boyermoore", "boyer-moore", "bm"};
 
   if (!FLAG_ALGORITHM.isSet()) {
     if (FLAG_EDIT.getValue() == 0) {
@@ -82,5 +84,7 @@ SearchAlgorithm* InputParser::algorithm(SearchMode search_mode) {
   if (checkAlgorithm(_KMP))   return new KMP        (search_mode);
   if (checkAlgorithm(_AHO))   return new AhoCorasick(search_mode);
   if (checkAlgorithm(_BITAP)) return new Bitap      (search_mode);
+  if (checkAlgorithm(_BOYER)) return new BoyerMoore (search_mode);
+
   return nullptr;
 }
