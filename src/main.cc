@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
  * Brute force    OK
  * KMP            OK
  * Aho-Corasick   OK
- * Boyer-Moore
+ * Boyer-Moore    BAD_CHAR OK
  * Sellers        OK
  * Shift-Or       OK
  * Ukkonen

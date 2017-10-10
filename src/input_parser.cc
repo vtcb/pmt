@@ -66,6 +66,8 @@ SearchAlgorithm* InputParser::algorithm() {
       {"aho", "aho-corasick", "ahocorasick", "ac"};
   static const std::set<std::string> _BITAP =
       {"bitap", "shift-or", "shift-and", "shiftor", "shiftand", "so"};
+  static const std::set<std::string> _BOYER =
+      {"boyer", "moore", "boyermoore", "boyer-moore", "bm"};
   static const std::set<std::string> _SELLERS =
       {"sellers", "edit-distance", "editdistance", "se", "ed"};
 
@@ -91,6 +93,8 @@ SearchAlgorithm* InputParser::algorithm() {
   if (checkAlgorithm(_KMP))     return new KMP        (search_mode);
   if (checkAlgorithm(_AHO))     return new AhoCorasick(search_mode);
   if (checkAlgorithm(_BITAP))   return new Bitap      (search_mode);
+  if (checkAlgorithm(_BOYER))   return new BoyerMoore (search_mode);
   if (checkAlgorithm(_SELLERS)) return new Sellers    (search_mode, max_error);
+
   return nullptr;
 }
