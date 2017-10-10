@@ -53,7 +53,11 @@ SearchMode InputParser::searchMode() {
   return FLAG_COUNT.getValue() ? SearchMode::COUNT : SearchMode::PRINT;
 }
 
-SearchAlgorithm* InputParser::algorithm(SearchMode search_mode) {
+int InputParser::maxError() {
+  return FLAG_EDIT.getValue();
+}
+
+SearchAlgorithm* InputParser::algorithm() {
   static const std::set<std::string> _NAIVE =
       {"naive", "brute-force", "bruteforce", "bf"};
   static const std::set<std::string> _KMP =
@@ -62,25 +66,35 @@ SearchAlgorithm* InputParser::algorithm(SearchMode search_mode) {
       {"aho", "aho-corasick", "ahocorasick", "ac"};
   static const std::set<std::string> _BITAP =
       {"bitap", "shift-or", "shift-and", "shiftor", "shiftand", "so"};
+  static const std::set<std::string> _BOYER =
+      {"boyer", "moore", "boyermoore", "boyer-moore", "bm"};
+  static const std::set<std::string> _SELLERS =
+      {"sellers", "edit-distance", "editdistance", "se", "ed"};
+
+  SearchMode search_mode = InputParser::searchMode();
+  int max_error = InputParser::maxError();
 
   if (!FLAG_ALGORITHM.isSet()) {
     if (FLAG_EDIT.getValue() == 0) {
       return new Naive(search_mode);
     }
-    return nullptr;
+    return new Sellers(search_mode, max_error);
   }
 
   std::string alias = FLAG_ALGORITHM.getValue();
-  std::transform(alias.begin(), alias.end(),alias.begin(), ::towlower);
+  std::transform(alias.begin(), alias.end(), alias.begin(), ::towlower);
 
   static const auto checkAlgorithm =
       [&](std::set<std::string> aliases) -> bool {
     return aliases.count(alias) > 0;
   };
 
-  if (checkAlgorithm(_NAIVE)) return new Naive      (search_mode);
-  if (checkAlgorithm(_KMP))   return new KMP        (search_mode);
-  if (checkAlgorithm(_AHO))   return new AhoCorasick(search_mode);
-  if (checkAlgorithm(_BITAP)) return new Bitap      (search_mode);
+  if (checkAlgorithm(_NAIVE))   return new Naive      (search_mode);
+  if (checkAlgorithm(_KMP))     return new KMP        (search_mode);
+  if (checkAlgorithm(_AHO))     return new AhoCorasick(search_mode);
+  if (checkAlgorithm(_BITAP))   return new Bitap      (search_mode);
+  if (checkAlgorithm(_BOYER))   return new BoyerMoore (search_mode);
+  if (checkAlgorithm(_SELLERS)) return new Sellers    (search_mode, max_error);
+
   return nullptr;
 }
