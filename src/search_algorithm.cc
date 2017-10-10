@@ -2,7 +2,12 @@
 
 #include <string>
 
-SearchAlgorithm::SearchAlgorithm(SearchMode mode) : mode(mode), count(0) {}
+SearchAlgorithm::SearchAlgorithm(SearchMode mode, int max_error)
+    : mode(mode), count(0), max_error(max_error) {}
+
+int SearchAlgorithm::getCount() {
+  return this->count;
+}
 
 void SearchAlgorithm::output(const std::string& line, int matches) {
   switch (this->mode) {
@@ -17,6 +22,6 @@ void SearchAlgorithm::output(const std::string& line, int matches) {
   }
 }
 
-int SearchAlgorithm::getCount() {
-  return this->count;
+int SearchAlgorithm::getMaxError() {
+  return max_error;
 }

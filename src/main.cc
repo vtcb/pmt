@@ -9,9 +9,8 @@
 #include "input_parser.h"
 #include "search_algorithms.h"
 
+// TODO(bolado): This shouldn't really be here.
 #include "bitmask.h"
-
-
 std::ostream& operator << (std::ostream& os, const BitMask mask) {
   os << "BitMask(" << mask.getSize() << ")[";
 
@@ -38,7 +37,7 @@ int main(int argc, char *argv[]) {
   std::vector<std::string> pattern_list  = input_parser.patternList();
   std::vector<std::string> textfile_list = input_parser.textfileList();
   SearchMode               search_mode   = input_parser.searchMode();
-  SearchAlgorithm          *algorithm    = input_parser.algorithm(search_mode);
+  SearchAlgorithm          *algorithm    = input_parser.algorithm();
 
   if (pattern_list.empty()) {
     std::cout << "Pattern list can't be empty." << std::endl;
@@ -73,8 +72,8 @@ int main(int argc, char *argv[]) {
  * KMP            OK
  * Aho-Corasick   OK
  * Boyer-Moore
- * Sellers
- * Shift-Or
+ * Sellers        OK
+ * Shift-Or       OK
  * Ukkonen
  * Wu-Mamber
  */

@@ -13,7 +13,8 @@ public:
   std::vector<std::string> patternList();
   std::vector<std::string> textfileList();
   SearchMode searchMode();
-  SearchAlgorithm* algorithm(SearchMode search_mode);
+  int maxError();
+  SearchAlgorithm* algorithm();
 
 private:
   FlagParser FLAG_PARSER;
