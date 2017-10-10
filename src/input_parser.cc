@@ -67,7 +67,7 @@ SearchAlgorithm* InputParser::algorithm() {
   static const std::set<std::string> _BITAP =
       {"bitap", "shift-or", "shift-and", "shiftor", "shiftand", "so"};
   static const std::set<std::string> _SELLERS =
-      {"sellers", "edit-distance", "editdistance", "se"};
+      {"sellers", "edit-distance", "editdistance", "se", "ed"};
 
   SearchMode search_mode = InputParser::searchMode();
   int max_error = InputParser::maxError();

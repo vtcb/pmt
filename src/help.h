@@ -34,7 +34,11 @@ const char *ALGORITHMS =
 "    Values: ac, aho, aho-corasick, ahocorasick\n"
 "  Bitap:\n"
 "    Bitap algorithm\n"
-"    Values: so, bitap, shift-or, shift-and, shiftor, shiftand\n";
+"    Values: so, bitap, shift-or, shift-and, shiftor, shiftand\n"
+"  Sellers:\n"
+"    Sellers algorithm\n"
+"    Handles approximate matching\n"
+"    Values: se, ed, sellers, edit-distance, editdistance\n";
 
 // TODO(bolado): Handle stdout versus stderr.
 class Help {
