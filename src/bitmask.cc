@@ -4,10 +4,11 @@
 #include <functional>
 #include <ostream>
 
-BitMask::BitMask(unsigned int size, int value) : size(size) {
-  data.assign(
-      (size + BitMask::DATA_SIZE - 1) / BitMask::DATA_SIZE,
-      value ? ~BitMaskDataType(0) : 0);
+BitMask::BitMask(unsigned int size, int value)
+    : size(size),
+      data(
+          (size + BitMask::DATA_SIZE - 1) / BitMask::DATA_SIZE,
+          value ? ~BitMaskDataType(0) : 0) {
   fixBack();
 }
 
