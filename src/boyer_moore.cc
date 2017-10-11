@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <tuple>
 
 #include "search_algorithm.h"
 
@@ -14,6 +15,16 @@ BoyerMoore::BoyerMoore(SearchMode mode) : SearchAlgorithm(mode) {}
 void BoyerMoore::search(
     const std::vector<std::string>& pattern_list,
     const std::vector<std::string>& textfile_list) {
+
+  bad_char_tables.assign(pattern_list.size(), std::vector<int>());
+  shift_tables.assign(pattern_list.size(), std::vector<int>());
+  border_positions.assign(pattern_list.size(), std::vector<int>());
+
+  for (unsigned int i = 0; i < pattern_list.size(); i++) {
+    bad_char_tables[i] = badChar(pattern_list[i]);
+    std::tie(shift_tables[i], border_positions[i]) = 
+        goodSuffix(pattern_list[i]);
+  }
 
   for (std::string filename : textfile_list) {
     std::ifstream textfile(filename);
@@ -29,26 +40,21 @@ void BoyerMoore::search(
     const std::string& text) {
   int matches = 0;
 
-  for (std::string pattern : pattern_list) {
-    preProcessing(pattern);
-    matches += search(pattern, text);
+  for (unsigned int i = 0; i < pattern_list.size(); i++) {
+    matches += search(pattern_list[i], text, bad_char_tables[i], 
+        shift_tables[i], border_positions[i]);
   }
   output(text, matches);
-}
-
-void BoyerMoore::preProcessing(const std::string& pattern){
-    bad_char_table.assign(ALPHABET, -1);
-    shift_table.assign(pattern.size()+1, 0);
-    border_position.assign(pattern.size()+1, 0);
-    badChar(pattern);
-    goodSuffix(pattern);
 }
 
 //BAD_CHAR
 
 int BoyerMoore::search(
     const std::string& pattern,
-    const std::string& text) {
+    const std::string& text,
+    const std::vector<int> bad_char_table, 
+    const std::vector<int> shift_table,
+    const std::vector<int> border_position) {
   if (text.size() < pattern.size()) return 0;
   int matches = 0;
 
@@ -82,16 +88,22 @@ int BoyerMoore::search(
   return matches;
 }
 
-void BoyerMoore::badChar(const std::string& pattern) {
-
+std::vector<int> BoyerMoore::badChar(const std::string& pattern) {
+  
+  std::vector<int> bad_char_table(ALPHABET, -1);
   //Last appearance of a character on the pattern
   for(unsigned int i = 0; i < pattern.size(); i++){
     bad_char_table[static_cast<unsigned char>(pattern[i])] = i;
   }
+  return bad_char_table;
 
 }
 
-void BoyerMoore::goodSuffix(const std::string& pattern){
+std::pair<std::vector<int>, std::vector<int>>
+    BoyerMoore::goodSuffix(const std::string& pattern){
+
+  std::vector<int> shift_table(pattern.size()+1, 0);
+  std::vector<int> border_position(pattern.size()+1, 0);
 
   unsigned int i = pattern.size();
   unsigned int j = i + 1;
@@ -111,5 +123,7 @@ void BoyerMoore::goodSuffix(const std::string& pattern){
     if(shift_table[i] == 0) shift_table[i] = j;
     if(i == j) j = border_position[j];
   }
+
+  return {shift_table, border_position};
 
 }
