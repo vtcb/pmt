@@ -18,10 +18,11 @@ private:
       const std::vector<std::string>& pattern_list, const std::string& text);
   int search(const std::string& pattern, const std::string& text);
   void badChar(const std::string& pattern);
+  void goodSuffix(const std::string& pattern);
   void preProcessing(const std::string& pattern);
 
   std::vector<int> bad_char_table;
-  std::vector<int> shift;
+  std::vector<int> shift_table;
   std::vector<int> border_position;
 
 };
