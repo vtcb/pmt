@@ -19,7 +19,7 @@ private:
   int search(const std::string& pattern, 
   			 const std::string& text,
   			 const std::vector<int>& table);
-  std::vector<int> kmp_table(const std::string& pattern);
+  std::vector<int> kmpTable(const std::string& pattern);
 
   std::vector<std::vector<int>> tables;
 };

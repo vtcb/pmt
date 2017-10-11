@@ -30,7 +30,7 @@ void BoyerMoore::search(
   int matches = 0;
 
   for (std::string pattern : pattern_list) {
-    preProcessing(pattern)
+    preProcessing(pattern);
     matches += search(pattern, text);
   }
   output(text, matches);
