@@ -2,3 +2,10 @@ build/*
 test/dna
 *.exe
 test/english
+check.sh
+grep_english
+grep_sol
+pmt_english
+pmt_sol
+test/english_cap
+test/english_wat
