@@ -63,15 +63,16 @@ int BoyerMoore::search(
     if(cur_char < 0){
       matches++;
       if(shift + pattern.size() < text.size()) {
-        unsigned int index =
-            static_cast<unsigned int>(text[shift+pattern.size()]);
-        shift += std::max(static_cast<int>(pattern.size()) - bad_char_table[index], 
+        unsigned char index =
+            static_cast<unsigned char>(text[shift + pattern.size()]);
+        shift += std::max(
+            static_cast<int>(pattern.size()) - bad_char_table[index], 
             shift_table[0]);
       } else {
         shift += 1;
       }
     } else {
-      unsigned int index = static_cast<unsigned int>(text[shift+cur_char]);
+      unsigned char index = static_cast<unsigned char>(text[shift+cur_char]);
       shift += std::max(std::max(1, cur_char - bad_char_table[index]),
           shift_table[cur_char + 1]);
     }
@@ -85,7 +86,7 @@ void BoyerMoore::badChar(const std::string& pattern) {
 
   //Last appearance of a character on the pattern
   for(unsigned int i = 0; i < pattern.size(); i++){
-    bad_char_table[static_cast<unsigned int>(pattern[i])] = i;
+    bad_char_table[static_cast<unsigned char>(pattern[i])] = i;
   }
 
 }
