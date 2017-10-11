@@ -32,6 +32,15 @@ void Bitap::search(
 }
 
 int Bitap::search(const std::string& pattern, const std::string& text) {
+  if (pattern.size() < 64) {
+    return searchSmallPattern(pattern, text);
+  } else {
+    return searchAnyPattern(pattern, text);
+  }
+}
+
+int Bitap::searchAnyPattern(
+    const std::string& pattern, const std::string& text) {
   int matches = 0;
   std::vector<BitMask> pattern_mask(300, BitMask(pattern.size() + 1, 1));
   BitMask mask = ~BitMask::one(pattern.size() + 1);
@@ -45,6 +54,28 @@ int Bitap::search(const std::string& pattern, const std::string& text) {
     mask = (mask | pattern_mask[ch]) << 1;
 
     if (mask[pattern.size()] == 0) {
+      matches++;
+    }
+  }
+
+  return matches;
+}
+
+int Bitap::searchSmallPattern(
+    const std::string& pattern, const std::string& text) {
+  int matches = 0;
+  std::vector<uint64_t> pattern_mask(300, ~uint64_t(0));
+  uint64_t mask = ~uint64_t(1);
+  uint64_t end_bit = uint64_t(1) << pattern.size();
+
+  for (unsigned int i = 0; i < pattern.size(); i++) {
+    pattern_mask[pattern[i]] &= ~(uint64_t(1) << i);
+  }
+
+  for (char ch : text) {
+    mask = (mask | pattern_mask[ch]) << 1;
+
+    if( (mask & end_bit) == 0) {
       matches++;
     }
   }

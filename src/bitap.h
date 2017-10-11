@@ -17,6 +17,10 @@ private:
   void search(
       const std::vector<std::string>& pattern_list, const std::string& text);
   int search(const std::string& pattern, const std::string& text);
+  int searchAnyPattern(
+      const std::string& pattern, const std::string& text);
+  int searchSmallPattern(
+      const std::string& pattern, const std::string& text);
 };
 
 #endif /* PMT_BITAP_H */
