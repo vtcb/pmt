@@ -10,12 +10,13 @@ class Sellers : public SearchAlgorithm {
 public:
   Sellers(SearchMode mode, int max_error = 0);
   void search(
-      std::vector<std::string> pattern_list,
-      std::vector<std::string> textfile_list);
+      const std::vector<std::string>& pattern_list,
+      const std::vector<std::string>& textfile_list);
 
 private:
-  void search(std::vector<std::string> pattern_list, std::string text);
-  bool search(std::string pattern, std::string text);
+  void search(
+      const std::vector<std::string>& pattern_list, const std::string& text);
+  bool search(const std::string& pattern, const std::string& text);
 };
 
 #endif /* PMT_SELLERS_H */

@@ -9,8 +9,8 @@
 KMP::KMP(SearchMode mode) : SearchAlgorithm(mode) {}
 
 void KMP::search(
-    std::vector<std::string> pattern_list,
-    std::vector<std::string> textfile_list) {
+    const std::vector<std::string>& pattern_list,
+    const std::vector<std::string>& textfile_list) {
   for (std::string filename : textfile_list) {
     std::ifstream textfile(filename);
     std::string line;
@@ -33,7 +33,9 @@ void KMP::search(
 //When KMP discovers a mismatch, the table determines how much
 //KMP will increase (variable m) and where it resumes testing (i)
 
-void KMP::search(std::vector<std::string> pattern_list, std::string text) {
+void KMP::search(
+    const std::vector<std::string>& pattern_list,
+    const std::string& text) {
   int matches = 0;
   for (std::string pattern : pattern_list) {
     table.assign(pattern.size(), 0);
@@ -43,7 +45,7 @@ void KMP::search(std::vector<std::string> pattern_list, std::string text) {
   output(text, matches);
 }
 
-int KMP::search(std::string pattern, std::string text) {
+int KMP::search(const std::string& pattern, const std::string& text) {
   int matches = 0;
   unsigned int current_match = 0;
   unsigned int current_char = 0;
@@ -68,7 +70,7 @@ int KMP::search(std::string pattern, std::string text) {
   return matches;
 }
 
-void KMP::kmp_table(std::string pattern) {
+void KMP::kmp_table(const std::string& pattern) {
   unsigned int position = 1;
   int candidate = 0;
   table[0] = -1;

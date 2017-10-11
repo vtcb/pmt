@@ -10,8 +10,8 @@
 Bitap::Bitap(SearchMode mode) : SearchAlgorithm(mode) {}
 
 void Bitap::search(
-    std::vector<std::string> pattern_list,
-    std::vector<std::string> textfile_list) {
+    const std::vector<std::string>& pattern_list,
+    const std::vector<std::string>& textfile_list) {
   for (std::string filename : textfile_list) {
     std::ifstream textfile(filename);
     std::string line;
@@ -21,7 +21,9 @@ void Bitap::search(
   }
 }
 
-void Bitap::search(std::vector<std::string> pattern_list, std::string text) {
+void Bitap::search(
+    const std::vector<std::string>& pattern_list,
+    const std::string& text) {
   int matches = 0;
   for (std::string pattern : pattern_list) {
     matches += search(pattern, text);
@@ -29,7 +31,7 @@ void Bitap::search(std::vector<std::string> pattern_list, std::string text) {
   output(text, matches);
 }
 
-int Bitap::search(std::string pattern, std::string text) {
+int Bitap::search(const std::string& pattern, const std::string& text) {
   int matches = 0;
   std::vector<BitMask> pattern_mask(300, BitMask(pattern.size() + 1, 1));
   BitMask mask = ~BitMask::one(pattern.size() + 1);

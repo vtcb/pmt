@@ -13,8 +13,8 @@ Sellers::Sellers(SearchMode mode, int max_error)
     : SearchAlgorithm(mode, max_error) {}
 
 void Sellers::search(
-    std::vector<std::string> pattern_list,
-    std::vector<std::string> textfile_list) {
+    const std::vector<std::string>& pattern_list,
+    const std::vector<std::string>& textfile_list) {
   for (std::string filename : textfile_list) {
     std::ifstream textfile(filename);
     std::string line;
@@ -24,7 +24,8 @@ void Sellers::search(
   }
 }
 
-void Sellers::search(std::vector<std::string> pattern_list, std::string text) {
+void Sellers::search(
+      const std::vector<std::string>& pattern_list, const std::string& text) {
   int matches = 0;
   for (std::string pattern : pattern_list) {
     matches += search(pattern, text);
@@ -32,7 +33,7 @@ void Sellers::search(std::vector<std::string> pattern_list, std::string text) {
   output(text, matches);
 }
 
-bool Sellers::search(std::string pattern, std::string text) {
+bool Sellers::search(const std::string& pattern, const std::string& text) {
   const static int infinity = 0x3f3f3f3f;
   std::vector<int> T_(pattern.size());
   std::vector<int> T(pattern.size(), infinity);

@@ -10,13 +10,14 @@ class KMP : public SearchAlgorithm {
 public:
   KMP(SearchMode mode);
   void search(
-      std::vector<std::string> pattern_list,
-      std::vector<std::string> textfile_list);
+      const std::vector<std::string>& pattern_list,
+      const std::vector<std::string>& textfile_list);
 
 private:
-  void search(std::vector<std::string> pattern_list, std::string text);
-  int search(std::string pattern, std::string text);
-  void kmp_table(std::string pattern);
+  void search(
+      const std::vector<std::string>& pattern_list, const std::string& text);
+  int search(const std::string& pattern, const std::string& text);
+  void kmp_table(const std::string& pattern);
 
   std::vector<int> table;
 };

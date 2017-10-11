@@ -12,8 +12,8 @@
 BoyerMoore::BoyerMoore(SearchMode mode) : SearchAlgorithm(mode) {}
 
 void BoyerMoore::search(
-    std::vector<std::string> pattern_list,
-    std::vector<std::string> textfile_list) {
+    const std::vector<std::string>& pattern_list,
+    const std::vector<std::string>& textfile_list) {
 
   for (std::string filename : textfile_list) {
     std::ifstream textfile(filename);
@@ -24,7 +24,9 @@ void BoyerMoore::search(
   }
 }
 
-void BoyerMoore::search(std::vector<std::string> pattern_list, std::string text) {
+void BoyerMoore::search(
+    const std::vector<std::string>& pattern_list,
+    const std::string& text) {
   int matches = 0;
 
   for (std::string pattern : pattern_list) {
@@ -37,7 +39,9 @@ void BoyerMoore::search(std::vector<std::string> pattern_list, std::string text)
 
 //BAD_CHAR
 
-int BoyerMoore::search(std::string pattern, std::string text) {
+int BoyerMoore::search(
+    const std::string& pattern,
+    const std::string& text) {
   int matches = 0;
 
   unsigned int shift = 0;
@@ -64,7 +68,7 @@ int BoyerMoore::search(std::string pattern, std::string text) {
   return matches;
 }
 
-void BoyerMoore::badChar(std::string pattern) {
+void BoyerMoore::badChar(const std::string& pattern) {
 
   //Last appearance of a character on the pattern
   for(unsigned int i = 0; i < pattern.size(); i++){

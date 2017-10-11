@@ -10,12 +10,13 @@ class Naive : public SearchAlgorithm {
 public:
   Naive(SearchMode mode);
   void search(
-      std::vector<std::string> pattern_list,
-      std::vector<std::string> textfile_list);
+      const std::vector<std::string>& pattern_list,
+      const std::vector<std::string>& textfile_list);
 
 private:
-  void search(std::vector<std::string> pattern_list, std::string text);
-  int search(std::string pattern, std::string text);
+  void search(
+      const std::vector<std::string>& pattern_list, const std::string& text);
+  int search(const std::string& pattern, const std::string& text);
 };
 
 #endif /* PMT_NAIVE_H */

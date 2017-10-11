@@ -10,8 +10,8 @@ AhoCorasick::AhoCorasick(SearchMode mode) : SearchAlgorithm(mode) {
 }
 
 void AhoCorasick::search(
-    std::vector<std::string> pattern_list,
-    std::vector<std::string> textfile_list) {
+    const std::vector<std::string>& pattern_list,
+    const std::vector<std::string>& textfile_list) {
   for (std::string pattern : pattern_list) {
     add(pattern);
   }
@@ -75,7 +75,7 @@ void AhoCorasick::activate() {
   // TODO(bolado): Preprocess edges.
 }
 
-void AhoCorasick::traverse(int u, std::string s) {
+void AhoCorasick::traverse(int u, const std::string& s) {
   printf("AHO TRAVERSAL: %02d %02d %02d %s\n", u, nodes[u].getFail(), nodes[u].getPatterns(), s.c_str());
   for (auto edge : nodes[u]) {
     std::string ds = s;

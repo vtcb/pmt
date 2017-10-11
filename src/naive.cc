@@ -9,8 +9,8 @@
 Naive::Naive(SearchMode mode) : SearchAlgorithm(mode) {}
 
 void Naive::search(
-    std::vector<std::string> pattern_list,
-    std::vector<std::string> textfile_list) {
+    const std::vector<std::string>& pattern_list,
+    const std::vector<std::string>& textfile_list) {
   for (std::string filename : textfile_list) {
     std::ifstream textfile(filename);
     std::string line;
@@ -20,7 +20,8 @@ void Naive::search(
   }
 }
 
-void Naive::search(std::vector<std::string> pattern_list, std::string text) {
+void Naive::search(
+    const std::vector<std::string>& pattern_list, const std::string& text) {
   int matches = 0;
   for (std::string pattern : pattern_list) {
     matches += search(pattern, text);
@@ -28,7 +29,7 @@ void Naive::search(std::vector<std::string> pattern_list, std::string text) {
   output(text, matches);
 }
 
-int Naive::search(std::string pattern, std::string text) {
+int Naive::search(const std::string& pattern, const std::string& text) {
   int matches = 0;
   for (unsigned int i = 0; i < text.size() - pattern.size() + 1; i++) {
     unsigned int partial = 0;

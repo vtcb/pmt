@@ -14,8 +14,8 @@ class SearchAlgorithm {
 public:
   SearchAlgorithm(SearchMode mode, int max_error = 0);
   virtual void search(
-      std::vector<std::string> pattern_list,
-      std::vector<std::string> textfile_list) = 0;
+      const std::vector<std::string>& pattern_list,
+      const std::vector<std::string>& textfile_list) = 0;
   int getCount();
 
 protected:
