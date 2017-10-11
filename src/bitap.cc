@@ -46,12 +46,13 @@ int Bitap::searchAnyPattern(
   BitMask mask = ~BitMask::one(pattern.size() + 1);
 
   for (unsigned int i = 0; i < pattern.size(); i++) {
-    pattern_mask[pattern[i]] =
-        pattern_mask[pattern[i]] & ~(BitMask::one(pattern.size() + 1) << i);
+    pattern_mask[static_cast<unsigned char>(pattern[i])] =
+        pattern_mask[static_cast<unsigned char>(pattern[i])]
+            & ~(BitMask::one(pattern.size() + 1) << i);
   }
 
   for (char ch : text) {
-    mask = (mask | pattern_mask[ch]) << 1;
+    mask = (mask | pattern_mask[static_cast<unsigned char>(ch)]) << 1;
 
     if (mask[pattern.size()] == 0) {
       matches++;
@@ -69,11 +70,11 @@ int Bitap::searchSmallPattern(
   uint64_t end_bit = uint64_t(1) << pattern.size();
 
   for (unsigned int i = 0; i < pattern.size(); i++) {
-    pattern_mask[pattern[i]] &= ~(uint64_t(1) << i);
+    pattern_mask[static_cast<unsigned char>(pattern[i])] &= ~(uint64_t(1) << i);
   }
 
   for (char ch : text) {
-    mask = (mask | pattern_mask[ch]) << 1;
+    mask = (mask | pattern_mask[static_cast<unsigned char>(ch)]) << 1;
 
     if( (mask & end_bit) == 0) {
       matches++;
