@@ -16,14 +16,16 @@ public:
 private:
   void search(
       const std::vector<std::string>& pattern_list, const std::string& text);
-  int search(const std::string& pattern, const std::string& text);
-  void badChar(const std::string& pattern);
-  void goodSuffix(const std::string& pattern);
-  void preProcessing(const std::string& pattern);
+  int search(const std::string& pattern, const std::string& text,
+  	  const std::vector<int> bad_char_table, 
+  	  const std::vector<int> shift_table,
+  	  const std::vector<int> border_position);
+  std::vector<int> badChar(const std::string& pattern);
+  std::pair<std::vector<int>, std::vector<int>> goodSuffix(const std::string& pattern);
 
-  std::vector<int> bad_char_table;
-  std::vector<int> shift_table;
-  std::vector<int> border_position;
+  std::vector<std::vector<int>> bad_char_tables;
+  std::vector<std::vector<int>> shift_tables;
+  std::vector<std::vector<int>> border_positions;
 
 };
 
