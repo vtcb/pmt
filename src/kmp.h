@@ -16,10 +16,12 @@ public:
 private:
   void search(
       const std::vector<std::string>& pattern_list, const std::string& text);
-  int search(const std::string& pattern, const std::string& text);
-  void kmp_table(const std::string& pattern);
+  int search(const std::string& pattern, 
+  			 const std::string& text,
+  			 const std::vector<int>& table);
+  std::vector<int> kmp_table(const std::string& pattern);
 
-  std::vector<int> table;
+  std::vector<std::vector<int>> tables;
 };
 
 #endif /* PMT_KMP_H */

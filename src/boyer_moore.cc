@@ -30,11 +30,17 @@ void BoyerMoore::search(
   int matches = 0;
 
   for (std::string pattern : pattern_list) {
-    bad_char_table.assign(ALPHABET, -1);
-    badChar(pattern);
+    preProcessing(pattern)
     matches += search(pattern, text);
   }
   output(text, matches);
+}
+
+void BoyerMoore::preProcessing(const std::string& pattern){
+    bad_char_table.assign(ALPHABET, -1);
+    badChar(pattern);
+    shift.assign(pattern.size()+1, 0);
+    border_position.assign(pattern.size()+1, 0);
 }
 
 //BAD_CHAR
