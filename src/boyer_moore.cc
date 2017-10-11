@@ -42,6 +42,7 @@ void BoyerMoore::search(
 int BoyerMoore::search(
     const std::string& pattern,
     const std::string& text) {
+  if (text.size() < pattern.size()) return 0;
   int matches = 0;
 
   unsigned int shift = 0;

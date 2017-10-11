@@ -30,6 +30,7 @@ void Naive::search(
 }
 
 int Naive::search(const std::string& pattern, const std::string& text) {
+  if (text.size() < pattern.size()) return 0;
   int matches = 0;
   for (unsigned int i = 0; i < text.size() - pattern.size() + 1; i++) {
     unsigned int partial = 0;
