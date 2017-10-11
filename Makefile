@@ -8,7 +8,7 @@ TARGET := pmt
 SRCEXT := cc
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g -Wall -Wextra
+CFLAGS := -O2 -Wall -Wextra
 LIB := 
 INC :=
 
