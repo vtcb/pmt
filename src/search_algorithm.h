@@ -17,6 +17,8 @@ public:
       const std::vector<std::string>& pattern_list,
       const std::vector<std::string>& textfile_list) = 0;
   int getCount();
+  int getMatches();
+  int getLineMatches();
 
 protected:
   void output(const std::string& line, int matches);
@@ -24,7 +26,8 @@ protected:
 
 private:
   SearchMode mode;
-  int count;
+  int matches;
+  int line_matches;
   int max_error;
 };
 
