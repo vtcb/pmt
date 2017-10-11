@@ -18,12 +18,10 @@ void BoyerMoore::search(
 
   bad_char_tables.assign(pattern_list.size(), std::vector<int>());
   shift_tables.assign(pattern_list.size(), std::vector<int>());
-  border_positions.assign(pattern_list.size(), std::vector<int>());
 
   for (unsigned int i = 0; i < pattern_list.size(); i++) {
     bad_char_tables[i] = badChar(pattern_list[i]);
-    std::tie(shift_tables[i], border_positions[i]) = 
-        goodSuffix(pattern_list[i]);
+    shift_tables[i] = goodSuffix(pattern_list[i]);
   }
 
   for (std::string filename : textfile_list) {
@@ -36,25 +34,21 @@ void BoyerMoore::search(
 }
 
 void BoyerMoore::search(
-    const std::vector<std::string>& pattern_list,
-    const std::string& text) {
+    const std::vector<std::string>& pattern_list, const std::string& text) {
   int matches = 0;
 
   for (unsigned int i = 0; i < pattern_list.size(); i++) {
-    matches += search(pattern_list[i], text, bad_char_tables[i], 
-        shift_tables[i], border_positions[i]);
+    matches +=
+        search(pattern_list[i], text, bad_char_tables[i], shift_tables[i]);
   }
   output(text, matches);
 }
 
-//BAD_CHAR
-
 int BoyerMoore::search(
     const std::string& pattern,
     const std::string& text,
-    const std::vector<int> bad_char_table, 
-    const std::vector<int> shift_table,
-    const std::vector<int> border_position) {
+    const std::vector<int>& bad_char_table, 
+    const std::vector<int>& shift_table) {
   if (text.size() < pattern.size()) return 0;
   int matches = 0;
 
@@ -99,11 +93,10 @@ std::vector<int> BoyerMoore::badChar(const std::string& pattern) {
 
 }
 
-std::pair<std::vector<int>, std::vector<int>>
-    BoyerMoore::goodSuffix(const std::string& pattern){
+std::vector<int> BoyerMoore::goodSuffix(const std::string& pattern) {
 
-  std::vector<int> shift_table(pattern.size()+1, 0);
-  std::vector<int> border_position(pattern.size()+1, 0);
+  std::vector<int> shift_table(pattern.size() + 1, 0);
+  std::vector<int> border_position(pattern.size() + 1, 0);
 
   unsigned int i = pattern.size();
   unsigned int j = i + 1;
@@ -124,6 +117,5 @@ std::pair<std::vector<int>, std::vector<int>>
     if(i == j) j = border_position[j];
   }
 
-  return {shift_table, border_position};
-
+  return shift_table;
 }

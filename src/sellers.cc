@@ -25,7 +25,7 @@ void Sellers::search(
 }
 
 void Sellers::search(
-      const std::vector<std::string>& pattern_list, const std::string& text) {
+    const std::vector<std::string>& pattern_list, const std::string& text) {
   int matches = 0;
   for (std::string pattern : pattern_list) {
     matches += search(pattern, text);

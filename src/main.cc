@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
     case SearchMode::COUNT:
       algorithm->search(pattern_list, textfile_list);
       std::cout << algorithm->getCount() << std::endl;
+      std::cout << algorithm->getMatches() << std::endl;
       break;
     case SearchMode::PRINT:
       algorithm->search(pattern_list, textfile_list);
