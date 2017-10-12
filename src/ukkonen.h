@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "search_algorithm.h"
+#include "ukkonen_node.h"
 
 class Ukkonen : public SearchAlgorithm {
 public:
@@ -13,7 +14,12 @@ public:
       const std::vector<std::string>& pattern_list,
       const std::vector<std::string>& textfile_list);
 
+  void add(const std::vector<int>& str);
+
 private:
+  std::vector<UkkonenNode> nodes;
+  int id_count;
+
   void search(
       const std::vector<std::string>& pattern_list, const std::string& text);
   int search(const std::string& pattern, const std::string& text);
