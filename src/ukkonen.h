@@ -19,6 +19,12 @@ private:
   void search(
       const std::vector<std::string>& pattern_list, const std::string& text);
   int search(const std::string& pattern, const std::string& text);
+
+  void activate(const std::string& pattern);
+  std::vector<int> getNextColumn(
+      const std::vector<int>& column,
+      const std::string& pattern,
+      unsigned char ch);
 };
 
 #endif /* PMT_UKKONEN_H */

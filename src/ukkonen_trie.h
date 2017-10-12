@@ -7,7 +7,7 @@
 class UkkonenTrie  {
 public:
   UkkonenTrie();
-  void add(const std::vector<int>& str);
+  int add(const std::vector<int>& str);
   int get(const std::vector<int>& str);
 
 private:

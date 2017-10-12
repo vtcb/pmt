@@ -2,7 +2,7 @@
 
 UkkonenTrie::UkkonenTrie() : id_count(0) {}
 
-void UkkonenTrie::add(const std::vector<int>& str) {
+int UkkonenTrie::add(const std::vector<int>& str) {
   int u = 0;
   for (int ch : str) {
     if (!nodes[u].hasNext(ch)) {
@@ -14,6 +14,7 @@ void UkkonenTrie::add(const std::vector<int>& str) {
   if (nodes[u].getId() == -1) {
     nodes[u].setId(id_count++);
   }
+  return nodes[u].getId();
 }
 
 int UkkonenTrie::get(const std::vector<int>& str) {
