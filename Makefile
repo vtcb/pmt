@@ -1,4 +1,4 @@
-CC := g++ -std=c++0x
+CC := g++ -std=c++0x -pg
 # CC := clang --analyze # and comment out the linker last line for sanity
 SRCDIR := src
 BUILDDIR := build

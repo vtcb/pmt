@@ -9,3 +9,5 @@ pmt_english
 pmt_sol
 test/english_cap
 test/english_wat
+gmon.out
+naive.stat
