@@ -16,7 +16,7 @@ public:
 private:
   void search(
       const std::vector<std::string>& pattern_list, const std::string& text);
-  bool search(const std::string& pattern, const std::string& text);
+  int search(const std::string& pattern, const std::string& text);
 };
 
 #endif /* PMT_SELLERS_H */

@@ -33,15 +33,18 @@ void Sellers::search(
   output(text, matches);
 }
 
-bool Sellers::search(const std::string& pattern, const std::string& text) {
-  const static int infinity = 0x3f3f3f3f;
+int Sellers::search(const std::string& pattern, const std::string& text) {
+  static const int infinity = 0x3f3f3f3f;
   std::vector<int> T_(pattern.size());
-  std::vector<int> T(pattern.size(), infinity);
-  int error = infinity;
+  std::vector<int> T(pattern.size());
+  int matches = 0;
+  for (unsigned int i = 0; i < pattern.size(); i++) {
+    T[i] = i + 1;
+  }
 
   auto ITERATION = [&](
-      const std::vector<int>& T,
-      const std::vector<int>& T_,
+      std::vector<int>& T,
+      std::vector<int>& T_,
       int i) {
     T[0] = text[i] == pattern[0] ? 0 : 1;
     for (unsigned int j = 1; j < pattern.size(); j++) {
@@ -51,11 +54,11 @@ bool Sellers::search(const std::string& pattern, const std::string& text) {
       cur = std::min(cur, T_[j - 1] + (text[i] != pattern[j]));
       cur = std::min(cur, T [j - 1] + 1);
     }
-    error = std::min(error, T.back());
+    matches += T.back() <= getMaxError();
   };
  
   int MAX_SIZE = text.size() & ~1;
-  for (unsigned int i = 0; i < MAX_SIZE; i += 2) {
+  for (int i = 0; i < MAX_SIZE; i += 2) {
     ITERATION(T_, T, i);
     ITERATION(T, T_, i + 1);
   }
@@ -63,5 +66,5 @@ bool Sellers::search(const std::string& pattern, const std::string& text) {
     ITERATION(T_, T, text.size() - 1);
   }
 
-  return error <= getMaxError();
+  return matches;
 }
