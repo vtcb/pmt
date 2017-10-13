@@ -1,6 +1,6 @@
 #include "ukkonen_trie.h"
 
-UkkonenTrie::UkkonenTrie() : id_count(0) {}
+UkkonenTrie::UkkonenTrie() : nodes(1), id_count(0) {}
 
 int UkkonenTrie::add(const std::vector<int>& str) {
   int u = 0;

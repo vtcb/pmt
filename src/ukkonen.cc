@@ -64,7 +64,7 @@ UkkonenAutomaton Ukkonen::activate(const std::string& pattern) {
 
   automaton.addNode();
   trie.add(initial_column);
-  q.push(std::tie(initial_column, initial_state));
+  q.push(std::make_tuple(std::move(initial_column), initial_state));
 
   while (!q.empty()) {
     std::vector<int> column;
@@ -84,8 +84,8 @@ UkkonenAutomaton Ukkonen::activate(const std::string& pattern) {
     if (next_state == -1) {
       next_state = trie.add(next_column);
       automaton.addNode();
+      q.push(std::make_tuple(std::move(next_column), next_state));
     }
-    q.push(std::make_tuple(std::move(next_column), next_state));
     automaton.addEdge(state, next_state, ch);
     } while (ch--);
   }
