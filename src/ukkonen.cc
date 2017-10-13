@@ -9,6 +9,7 @@
 
 #include "search_algorithm.h"
 #include "ukkonen_node.h"
+#include "ukkonen_automaton.h"
 
 Ukkonen::Ukkonen(SearchMode mode, int max_error)
     : SearchAlgorithm(mode, max_error) {}
@@ -16,30 +17,36 @@ Ukkonen::Ukkonen(SearchMode mode, int max_error)
 void Ukkonen::search(
     const std::vector<std::string>& pattern_list,
     const std::vector<std::string>& textfile_list) {
+  for (const std::string& pattern : pattern_list) {
+    automata.push_back(std::move(activate(pattern)));
+  }
+
   for (const std::string& filename : textfile_list) {
     std::ifstream textfile(filename);
     std::string line;
     while (std::getline(textfile, line)) {
-      search(pattern_list, line);
+      search(line);
     }
   }
 }
 
-void Ukkonen::search(
-    const std::vector<std::string>& pattern_list, const std::string& text) {
+void Ukkonen::search(const std::string& text) {
   int matches = 0;
-  for (const std::string& pattern : pattern_list) {
-    matches += search(pattern, text);
+  for (const UkkonenAutomaton& automaton : automata) {
+    matches += search(automaton, text);
   }
   output(text, matches);
 }
 
-int Ukkonen::search(const std::string& pattern, const std::string& text) {
+int Ukkonen::search(const UkkonenAutomaton& automaton, const std::string& text) {
   int matches = 0;
+
   return matches;
 }
 
-void Ukkonen::activate(const std::string& pattern) {
+UkkonenAutomaton Ukkonen::activate(const std::string& pattern) {
+  UkkonenAutomaton automaton;
+
   std::queue<std::tuple<std::vector<int>, int>> q;
   int initial_state = 0;
   std::vector<int> initial_column(pattern.size());
@@ -75,6 +82,8 @@ void Ukkonen::activate(const std::string& pattern) {
     automaton.addEdge(state, next_state, ch);
     } while (ch--);
   }
+
+  return automaton;
 }
 
 std::vector<int> Ukkonen::getNextColumn(

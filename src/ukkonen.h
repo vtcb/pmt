@@ -17,12 +17,11 @@ public:
 
 private:
   UkkonenTrie trie;
-  UkkonenAutomaton automaton;
-  void search(
-      const std::vector<std::string>& pattern_list, const std::string& text);
-  int search(const std::string& pattern, const std::string& text);
+  std::vector<UkkonenAutomaton> automata;
+  void search(const std::string& text);
+  int search(const UkkonenAutomaton& automaton, const std::string& text);
 
-  void activate(const std::string& pattern);
+  UkkonenAutomaton activate(const std::string& pattern);
   std::vector<int> getNextColumn(
       const std::vector<int>& column,
       const std::string& pattern,
