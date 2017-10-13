@@ -70,6 +70,8 @@ SearchAlgorithm* InputParser::algorithm() {
       {"boyer", "moore", "boyermoore", "boyer-moore", "bm"};
   static const std::set<std::string> _SELLERS =
       {"sellers", "edit-distance", "editdistance", "se", "ed"};
+  static const std::set<std::string> _UKKONEN =
+      {"ukkonen", "uk", "u"};
 
   SearchMode search_mode = InputParser::searchMode();
   int max_error = InputParser::maxError();
@@ -95,6 +97,7 @@ SearchAlgorithm* InputParser::algorithm() {
   if (checkAlgorithm(_BITAP))   return new Bitap      (search_mode);
   if (checkAlgorithm(_BOYER))   return new BoyerMoore (search_mode);
   if (checkAlgorithm(_SELLERS)) return new Sellers    (search_mode, max_error);
+  if (checkAlgorithm(_UKKONEN)) return new Ukkonen    (search_mode, max_error);
 
   return nullptr;
 }

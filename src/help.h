@@ -39,9 +39,13 @@ const char *ALGORITHMS =
 "    Boyer-Moore algorithm\n"
 "    Values: boyer, moore, boyermoore, boyer-moore, bm\n"
 "  Sellers:\n"
-"    Sellers algorithm\n"
+"    Sellers' algorithm\n"
 "    Handles approximate matching\n"
-"    Values: se, ed, sellers, edit-distance, editdistance\n";
+"    Values: se, ed, sellers, edit-distance, editdistance\n"
+"  Ukkonen:\n"
+"    Ukkonen's algorithm\n"
+"    Handles approximate matching\n"
+"    Values: u, uk, ukkonen\n";
 
 // TODO(bolado): Handle stdout versus stderr.
 class Help {
