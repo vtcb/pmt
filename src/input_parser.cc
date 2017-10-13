@@ -6,6 +6,8 @@
 #include <set>
 #include <sstream>
 
+#include "algorithm_chooser.h"
+
 Flag<int>         FLAG_EDIT     ("edit",      'e', 0);
 Flag<std::string> FLAG_PATTERN  ("pattern",   'p', "");
 Flag<std::string> FLAG_ALGORITHM("algorithm", 'a', "");
@@ -77,10 +79,7 @@ SearchAlgorithm* InputParser::algorithm() {
   int max_error = InputParser::maxError();
 
   if (!FLAG_ALGORITHM.isSet()) {
-    if (FLAG_EDIT.getValue() == 0) {
-      return new Naive(search_mode);
-    }
-    return new Sellers(search_mode, max_error);
+    return AlgorithmChooser::choose(patternList(), searchMode(), maxError());
   }
 
   std::string alias = FLAG_ALGORITHM.getValue();

@@ -45,8 +45,8 @@ int main(int argc, char *argv[]) {
   switch (search_mode) {
     case SearchMode::COUNT:
       algorithm->search(pattern_list, textfile_list);
-      std::cout << algorithm->getCount() << std::endl;
-      std::cout << algorithm->getMatches() << std::endl;
+      std::cout << "Lines:   " << algorithm->getCount() << std::endl;
+      std::cout << "Matches: " << algorithm->getMatches() << std::endl;
       break;
     case SearchMode::PRINT:
       algorithm->search(pattern_list, textfile_list);
@@ -61,6 +61,6 @@ int main(int argc, char *argv[]) {
  * Boyer-Moore    OK
  * Sellers        OK
  * Shift-Or       OK
- * Ukkonen
+ * Ukkonen        OK
  * Wu-Mamber
  */
