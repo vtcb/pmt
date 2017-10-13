@@ -5,6 +5,8 @@
 #include <locale>
 #include <set>
 #include <sstream>
+#include <string>
+#include <vector>
 
 #include "algorithm_chooser.h"
 
@@ -13,6 +15,7 @@ Flag<std::string> FLAG_PATTERN  ("pattern",   'p', "");
 Flag<std::string> FLAG_ALGORITHM("algorithm", 'a', "");
 Flag<bool>        FLAG_COUNT    ("count",     'c', false);
 Flag<bool>        FLAG_HELP     ("help",      'h', false);
+Flag<std::string> FLAG_OUTPUT   ("output",    'o', "");
 
 void InputParser::parse(int argc, char *argv[]) {
   FLAG_PARSER.addFlag(&FLAG_EDIT);
@@ -20,11 +23,20 @@ void InputParser::parse(int argc, char *argv[]) {
   FLAG_PARSER.addFlag(&FLAG_ALGORITHM);
   FLAG_PARSER.addFlag(&FLAG_COUNT);
   FLAG_PARSER.addFlag(&FLAG_HELP);
+  FLAG_PARSER.addFlag(&FLAG_OUTPUT);
   FLAG_PARSER.parse(argc, argv);
 }
 
 bool InputParser::help() {
   return FLAG_HELP.getValue();
+}
+
+bool InputParser::hasOutputFile() {
+  return FLAG_OUTPUT.isSet();
+}
+
+std::string InputParser::outputFile() {
+  return FLAG_OUTPUT.getValue();
 }
 
 // TODO(bolado): Handle empty lines

@@ -25,6 +25,10 @@ int main(int argc, char *argv[]) {
   SearchMode               search_mode   = input_parser.searchMode();
   SearchAlgorithm          *algorithm    = input_parser.algorithm();
 
+  if (input_parser.hasOutputFile()) {
+    freopen(input_parser.outputFile().c_str(), "w", stdout);
+  }
+
   if (pattern_list.empty()) {
     std::cout << "Pattern list can't be empty." << std::endl;
     // TODO(bolado): Even for an empty file?
