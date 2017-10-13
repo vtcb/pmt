@@ -18,9 +18,7 @@ public:
   std::vector<int>::const_iterator cbegin();
   std::vector<int>::const_iterator cend();
 
-  int& operator [](char ch) {
-    return next[ch];
-  }
+  int& operator [](unsigned char ch);
 
 private:
   std::vector<int> next;

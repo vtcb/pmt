@@ -54,25 +54,31 @@ void AhoCorasick::activate() {
 
     unsigned char ch = 255;
     do {
-      if (!nodes[u].hasNext(ch)) continue;
-      int v = nodes[u][ch];
-      int dad = u;
-      int fail = 0;
-
-      while (dad) {
-        dad = nodes[dad].getFail();
-        if (nodes[dad].hasNext(ch)) {
-          fail = nodes[dad][ch];
-          break;
+      if (!nodes[u].hasNext(ch)) {
+        int fail = nodes[u].getFail();
+        if (nodes[fail].hasNext(ch)) {
+          nodes[u][ch] = nodes[fail][ch];
+        } else {
+          nodes[u][ch] = 0;
         }
-      }
-      nodes[v].addPatterns(nodes[fail].getPatterns());
+      } else {
+        int v = nodes[u][ch];
+        int dad = u;
+        int fail = 0;
 
-      processNode(v, fail);
+        while (dad) {
+          dad = nodes[dad].getFail();
+          if (nodes[dad].hasNext(ch)) {
+            fail = nodes[dad][ch];
+            break;
+          }
+        }
+        nodes[v].addPatterns(nodes[fail].getPatterns());
+
+        processNode(v, fail);
+      }
     } while (ch--);
   }
-
-  // TODO(bolado): Preprocess edges.
 }
 
 void AhoCorasick::traverse(int u, const std::string& s) {
@@ -91,13 +97,7 @@ int AhoCorasick::search(const std::string& text) {
   int u = 0;
   int matches = 0;
   for (unsigned char ch : text) {
-    while (u && !nodes[u].hasNext(ch)) {
-      u = nodes[u].getFail();
-    }
-
-    if (nodes[u].hasNext(ch)) {
-      u = nodes[u][ch];
-    }
+    u = nodes[u][ch];
     matches += nodes[u].getPatterns();
   }
   return matches;

@@ -41,3 +41,7 @@ std::vector<int>::const_iterator AhoNode::cbegin() {
 std::vector<int>::const_iterator AhoNode::cend() {
   return next.cend();
 }
+
+int& AhoNode::operator [](unsigned char ch) {
+  return next[ch];
+}
