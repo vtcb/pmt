@@ -1,9 +1,9 @@
 #include "aho_node.h"
 
-AhoNode::AhoNode() : fail(0), patterns(0) {}
+AhoNode::AhoNode() : next(256, -1), fail(0), patterns(0) {}
 
-bool AhoNode::hasNext(char ch) {
-  return next.count(ch);
+bool AhoNode::hasNext(unsigned char ch) {
+  return next[ch] != -1;
 }
 
 void AhoNode::addPattern() {
@@ -26,18 +26,18 @@ void AhoNode::setFail(int fail) {
   this->fail = fail;
 }
 
-std::unordered_map<char, int>::iterator AhoNode::begin() {
+std::vector<int>::iterator AhoNode::begin() {
   return next.begin();
 }
 
-std::unordered_map<char, int>::iterator AhoNode::end() {
+std::vector<int>::iterator AhoNode::end() {
   return next.end();
 }
 
-std::unordered_map<char, int>::const_iterator AhoNode::cbegin() {
+std::vector<int>::const_iterator AhoNode::cbegin() {
   return next.cbegin();
 }
 
-std::unordered_map<char, int>::const_iterator AhoNode::cend() {
+std::vector<int>::const_iterator AhoNode::cend() {
   return next.cend();
 }
