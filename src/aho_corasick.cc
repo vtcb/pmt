@@ -12,7 +12,7 @@ AhoCorasick::AhoCorasick(SearchMode mode) : SearchAlgorithm(mode) {
 void AhoCorasick::search(
     const std::vector<std::string>& pattern_list,
     const std::vector<std::string>& textfile_list) {
-  for (std::string pattern : pattern_list) {
+  for (const std::string& pattern : pattern_list) {
     add(pattern);
   }
 
