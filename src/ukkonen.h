@@ -6,6 +6,7 @@
 
 #include "search_algorithm.h"
 #include "ukkonen_trie.h"
+#include "ukkonen_automaton.h"
 
 class Ukkonen : public SearchAlgorithm {
 public:
@@ -16,6 +17,7 @@ public:
 
 private:
   UkkonenTrie trie;
+  UkkonenAutomaton automaton;
   void search(
       const std::vector<std::string>& pattern_list, const std::string& text);
   int search(const std::string& pattern, const std::string& text);

@@ -41,23 +41,16 @@ int Ukkonen::search(const std::string& pattern, const std::string& text) {
 
 void Ukkonen::activate(const std::string& pattern) {
   std::queue<std::tuple<std::vector<int>, int>> q;
-  std::vector<int> initial_column(pattern.size());
   int initial_state = 0;
+  std::vector<int> initial_column(pattern.size());
 
-  auto enqueue = [&](int state, const std::vector<int>& next_column) {
-    int next_state = trie.get(next_column);
-    if (next_state == -1) {
-      next_state = trie.add(next_column);
-    }
-    q.push(std::tie(next_column, next_state));
-    // Add edge from state to next_state
-    if (next_column.back() < getMaxError()) {
-      // Add to F :)
-    }
-  };
+  for (unsigned int i = 0; i < pattern.size(); i++) {
+    initial_column[i] = i + 1;
+  }
 
-  // automata.add(initial_state);
-  enqueue(initial_state, initial_column);
+  automaton.addNode();
+  trie.add(initial_column);
+  q.push(std::tie(initial_column, initial_state));
 
   while (!q.empty()) {
     std::vector<int> column;
@@ -65,9 +58,21 @@ void Ukkonen::activate(const std::string& pattern) {
     std::tie(column, state) = std::move(q.front());
     q.pop();
 
+    if (column.back() <= getMaxError()) {
+      automaton.setFinal(state);
+    }
+
     unsigned char ch = 255;
     do {
-      enqueue(state, getNextColumn(column, pattern, ch));
+    std::vector<int> next_column =
+        std::move(getNextColumn(column, pattern, ch));
+    int next_state = trie.get(next_column);
+    if (next_state == -1) {
+      next_state = trie.add(next_column);
+      automaton.addNode();
+    }
+    q.push(std::tie(next_column, next_state));
+    automaton.addEdge(state, next_state, ch);
     } while (ch--);
   }
 }
