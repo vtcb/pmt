@@ -78,7 +78,7 @@ UkkonenAutomaton Ukkonen::activate(const std::string& pattern) {
       next_state = trie.add(next_column);
       automaton.addNode();
     }
-    q.push(std::tie(next_column, next_state));
+    q.push(std::make_tuple(std::move(next_column), next_state));
     automaton.addEdge(state, next_state, ch);
     } while (ch--);
   }
