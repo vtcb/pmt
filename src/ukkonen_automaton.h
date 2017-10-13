@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "ukkonen_node.h"
+#include "ukkonen_cell.h"
 
 class UkkonenAutomaton {
 public:
@@ -15,7 +15,7 @@ public:
   bool isFinal(int u) const;
 
 private:
-  std::vector<UkkonenNode> nodes;
+  std::vector<UkkonenCell> nodes;
 };
 
 #endif /* PMT_UKKONEN_AUTOMATON_H */

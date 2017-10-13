@@ -1,11 +1,11 @@
 #include "ukkonen_automaton.h"
 
-#include "ukkonen_node.h"
+#include "ukkonen_cell.h"
 
 UkkonenAutomaton::UkkonenAutomaton() {}
 
 void UkkonenAutomaton::addNode() {
-  nodes.push_back(UkkonenNode());
+  nodes.push_back(UkkonenCell());
 }
 
 void UkkonenAutomaton::addEdge(int u, int v, int c) {
@@ -16,9 +16,9 @@ int UkkonenAutomaton::getNext(int u, int c) const {
 }
 
 void UkkonenAutomaton::setFinal(int u) {
-  nodes[u].setId(1);
+  nodes[u].setFinal();
 }
 
 bool UkkonenAutomaton::isFinal(int u) const {
-  return nodes[u].getId() == 1;
+  return nodes[u].isFinal();
 }
