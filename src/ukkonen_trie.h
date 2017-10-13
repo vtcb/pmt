@@ -8,7 +8,7 @@ class UkkonenTrie  {
 public:
   UkkonenTrie();
   int add(const std::vector<int>& str);
-  int get(const std::vector<int>& str);
+  int get(const std::vector<int>& str) const;
 
 private:
   std::vector<UkkonenNode> nodes;

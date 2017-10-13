@@ -17,13 +17,13 @@ int UkkonenTrie::add(const std::vector<int>& str) {
   return nodes[u].getId();
 }
 
-int UkkonenTrie::get(const std::vector<int>& str) {
+int UkkonenTrie::get(const std::vector<int>& str) const {
   int u = 0;
   for (int ch : str) {
     if (!nodes[u].hasNext(ch)) {
       return -1;
     }
-    u = nodes[u][ch];
+    u = nodes[u].at(ch);
   }
   return nodes[u].getId();
 }

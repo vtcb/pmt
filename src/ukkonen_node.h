@@ -7,10 +7,11 @@ class UkkonenNode  {
 public:
   UkkonenNode();
   void setId(int id);
-  int getId();
-  bool hasNext(int ch);
+  int getId() const;
+  bool hasNext(int ch) const;
 
   int& operator [](int ch);
+  int at(int ch) const;
 
 private:
   std::unordered_map<int, int> next;

@@ -40,6 +40,13 @@ void Ukkonen::search(const std::string& text) {
 
 int Ukkonen::search(const UkkonenAutomaton& automaton, const std::string& text) {
   int matches = 0;
+  int state = 0;
+
+  matches += automaton.isFinal(state);
+  for (unsigned char ch : text) {
+    state = automaton.getNext(state, ch);
+    matches += automaton.isFinal(state);
+  }
 
   return matches;
 }
