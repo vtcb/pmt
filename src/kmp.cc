@@ -78,12 +78,12 @@ int KMP::search(const std::string& pattern,
 
 std::vector<int> KMP::kmpTable(const std::string& pattern) {
 
-  std::vector<int> table(pattern.size(), 0);
+  std::vector<int> table(pattern.size() + 1, 0);
   unsigned int position = 1;
   int candidate = 0;
   table[0] = -1;
 
-  while (position < pattern.size()) {
+  while (position < table.size()) {
     if (pattern[position] == pattern[candidate]) {
       table[position] = table[candidate];
     } else {

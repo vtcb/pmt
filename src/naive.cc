@@ -44,3 +44,4 @@ int Naive::search(const std::string& pattern, const std::string& text) {
   }
   return matches;
 }
+
