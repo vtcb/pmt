@@ -1,6 +1,6 @@
 #include "ukkonen_node.h"
 
-UkkonenNode::UkkonenNode() : id(-1) {}
+UkkonenNode::UkkonenNode() : next(3, -1), id(-1) {}
 
 void UkkonenNode::setId(int id) {
   this->id = id;
@@ -11,7 +11,7 @@ int UkkonenNode::getId() const {
 }
 
 bool UkkonenNode::hasNext(int ch) const {
-  return next.count(ch) > 0;
+  return next[ch] != -1;
 }
 
 int& UkkonenNode::operator [](int ch) {

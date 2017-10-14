@@ -1,7 +1,7 @@
 #ifndef PMT_UKKONEN_NODE_H
 #define PMT_UKKONEN_NODE_H
 
-#include <unordered_map>
+#include <vector>
 
 class UkkonenNode  {
 public:
@@ -14,7 +14,7 @@ public:
   int at(int ch) const;
 
 private:
-  std::unordered_map<int, int> next;
+  std::vector<int> next;
   int id;
 };
 

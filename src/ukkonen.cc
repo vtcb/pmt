@@ -105,6 +105,7 @@ std::vector<int> Ukkonen::getNextColumn(
     cur = std::min(cur, old_column[j]     + 1);
     cur = std::min(cur, old_column[j - 1] + (ch != pattern[j]));
     cur = std::min(cur,     column[j - 1] + 1);
+    cur = std::min(cur, getMaxError() + 1);
   }
   return column;
 }
