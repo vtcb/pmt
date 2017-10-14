@@ -23,8 +23,12 @@ def main():
     ('ukkonen', True)
   ]
   tests = [
-    ('test/patt1.txt', 'test/text1.txt', 0),
-    ('test/patt1.txt', 'test/text2.txt', 0)
+    ('test/blue.txt', 'test/english', 0),
+    ('test/blue.txt', 'test/english', 1),
+    ('test/blue.txt', 'test/english', 2),
+    ('test/marshmallow.txt', 'test/english', 0),
+    ('test/marshmallow.txt', 'test/english', 1),
+    ('test/marshmallow.txt', 'test/english', 2),
   ]
 
   for pat, txt, err in tests:

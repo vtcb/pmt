@@ -7,14 +7,14 @@ TARGET := bin/pmt
 SRCEXT := cc
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -O2 -Wall -Wextra
+CFLAGS := -O2 -Wall -Wextra -flto
 LIB := 
 INC :=
 
 $(TARGET): $(OBJECTS)
 	@mkdir -p $(TARGETDIR)
 	@echo " Linking..."
-	@echo " $(CC) $^ -c -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
+	@echo " $(CC) $(CFLAGS) $^ -c -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
