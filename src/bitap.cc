@@ -42,7 +42,7 @@ int Bitap::search(const std::string& pattern, const std::string& text) {
 int Bitap::searchAnyPattern(
     const std::string& pattern, const std::string& text) {
   int matches = 0;
-  std::vector<BitMask> pattern_mask(300, BitMask(pattern.size() + 1, 1));
+  std::vector<BitMask> pattern_mask(256, BitMask(pattern.size() + 1, 1));
   BitMask mask = ~BitMask::one(pattern.size() + 1);
 
   for (unsigned int i = 0; i < pattern.size(); i++) {
@@ -51,8 +51,8 @@ int Bitap::searchAnyPattern(
             & ~(BitMask::one(pattern.size() + 1) << i);
   }
 
-  for (char ch : text) {
-    mask = (mask | pattern_mask[static_cast<unsigned char>(ch)]) << 1;
+  for (unsigned char ch : text) {
+    mask = (mask | pattern_mask[ch]) << 1;
 
     if (mask[pattern.size()] == 0) {
       matches++;
@@ -65,7 +65,7 @@ int Bitap::searchAnyPattern(
 int Bitap::searchSmallPattern(
     const std::string& pattern, const std::string& text) {
   int matches = 0;
-  std::vector<uint64_t> pattern_mask(300, ~uint64_t(0));
+  std::vector<uint64_t> pattern_mask(256, ~uint64_t(0));
   uint64_t mask = ~uint64_t(1);
   uint64_t end_bit = uint64_t(1) << pattern.size();
 
@@ -73,8 +73,8 @@ int Bitap::searchSmallPattern(
     pattern_mask[static_cast<unsigned char>(pattern[i])] &= ~(uint64_t(1) << i);
   }
 
-  for (char ch : text) {
-    mask = (mask | pattern_mask[static_cast<unsigned char>(ch)]) << 1;
+  for (unsigned char ch : text) {
+    mask = (mask | pattern_mask[ch]) << 1;
 
     if( (mask & end_bit) == 0) {
       matches++;
