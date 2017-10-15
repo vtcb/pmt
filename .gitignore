@@ -1,6 +1,7 @@
 build/*
 bin/*
 obj/*
+stats/*
 test/dna
 *.exe
 test/english
