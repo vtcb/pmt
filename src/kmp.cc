@@ -12,9 +12,12 @@ void KMP::search(
     const std::vector<std::string>& pattern_list,
     const std::vector<std::string>& textfile_list) {
 
-  tables.assign(pattern_list.size(), std::vector<int>());
+  // tables.assign(pattern_list.size(), std::vector<int>());
   for (unsigned int i = 0; i < pattern_list.size(); i++) {
-    tables[i] = kmpTable(pattern_list[i]);
+    // std::cerr << "A" << std::endl;
+    // tables[i] = std::move(kmpTable(pattern_list[i]));
+    // std::cerr << "B" << std::endl;
+    tables.push_back(kmpTable(pattern_list[i]));
   }
 
   for (std::string filename : textfile_list) {
@@ -53,49 +56,37 @@ int KMP::search(const std::string& pattern,
                 const std::string& text,
                 const std::vector<int>& table) {
   int matches = 0;
-  unsigned int current_match = 0;
-  unsigned int current_char = 0;
+  int i = 0, j = 0;
+  int n = text.size(), m = pattern.size();
 
-  while (current_match + current_char < text.size()) {
-    if (pattern[current_char] == text[current_match + current_char]) {
-      current_char++;
-      if (current_char == pattern.size()) {
-        matches++;
-      }
-    } else {
-      if (table[current_char] > -1) {
-        current_match += current_char - table[current_char];
-        current_char = table[current_char];
-      } else {
-        current_match += current_char + 1;
-        current_char = 0;
-      }
+  while (i < n) {
+    while (j >= 0 && text[i] != pattern[j]) {
+      j = table[j];
+    }
+    i++; j++;
+    if (j == m) {
+      matches++;
+      j = table[j];
     }
   }
-  
+
   return matches;
 }
 
 std::vector<int> KMP::kmpTable(const std::string& pattern) {
-  std::vector<int> table(pattern.size() + 1, 0);
-  unsigned int position = 1;
-  int candidate = 0;
+  std::vector<int> table(pattern.size() + 1);
+  unsigned int position = 0;
+  int candidate = -1;
   table[0] = -1;
 
-  while (position < table.size()) {
-    if (pattern[position] == pattern[candidate]) {
-      table[position] = table[candidate];
-    } else {
-      table[position] = candidate;
+  while (position < pattern.size()) {
+    while (candidate >= 0 && pattern[position] != pattern[candidate]) {
       candidate = table[candidate];
-      while (candidate >= 0 && pattern[position] != pattern[candidate]) {
-        candidate = table[candidate];
-      }
     }
-    position++;
     candidate++;
+    position++;
+    table[position] = candidate;
   }
-  table[position] = candidate;
-  return table;
 
+  return table;
 }
