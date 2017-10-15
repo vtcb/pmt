@@ -12,12 +12,9 @@ void KMP::search(
     const std::vector<std::string>& pattern_list,
     const std::vector<std::string>& textfile_list) {
 
-  // tables.assign(pattern_list.size(), std::vector<int>());
+  tables.assign(pattern_list.size(), std::vector<int>());
   for (unsigned int i = 0; i < pattern_list.size(); i++) {
-    // std::cerr << "A" << std::endl;
-    // tables[i] = std::move(kmpTable(pattern_list[i]));
-    // std::cerr << "B" << std::endl;
-    tables.push_back(kmpTable(pattern_list[i]));
+    tables[i] = std::move(kmpTable(pattern_list[i]));
   }
 
   for (std::string filename : textfile_list) {
