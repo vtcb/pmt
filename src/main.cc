@@ -26,7 +26,10 @@ int main(int argc, char *argv[]) {
   SearchAlgorithm          *algorithm    = input_parser.algorithm();
 
   if (input_parser.hasOutputFile()) {
-    freopen(input_parser.outputFile().c_str(), "w", stdout);
+    if (freopen(input_parser.outputFile().c_str(), "w", stdout) == NULL) {
+      std::cout << "Could not redirect output to file." << std::endl;
+      exit(1);
+    }
   }
 
   if (pattern_list.empty()) {

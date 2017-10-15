@@ -18,7 +18,8 @@ const char *OPTIONS =
 "  -a, --algorithm Specify search algorithm to run\n"
 "                  See \"Algorithms\" section for possible values\n"
 "  -e, --edit      Specify max error\n"
-"  -c, --count     Output only number of matches\n";
+"  -c, --count     Output only number of matches\n"
+"  -o, --output    Specify file to redirect output\n";
 
 // TODO(bolado): Add complexity, approximate matching, multiple patterns etc.
 const char *ALGORITHMS =
