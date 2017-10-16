@@ -1,4 +1,4 @@
-CC := g++ -std=c++0x -pg
+CC := g++ -std=c++0x
 SRCDIR := src
 BUILDDIR := obj
 TARGETDIR := bin
